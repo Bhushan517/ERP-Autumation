@@ -6,13 +6,20 @@ test('hostel flow using POM', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const hostelPage = new HostelPage(page);
 
+  const uniqueId = `${Date.now()}`;
+  const buildingName = `tushar building ${uniqueId}`;
+  const floorName = `floor tushar ${uniqueId}`;
+  const roomName = `tushars room ${uniqueId}`;
+  const templateName = `tushar template ${uniqueId}`;
+  const feesName = `tushar fees ${uniqueId}`;
+
   await loginPage.login('9699342811+2', 'Ritesh@123');
 
   await hostelPage.navigateToHostelModule();
   await hostelPage.navigateToPremises();
 
   await hostelPage.addBuilding({
-    name: 'tushar building 6',
+    name: buildingName,
     type: 'Room',
     capacity: '50',
     address: 'talegon dighe',
@@ -22,30 +29,30 @@ test('hostel flow using POM', async ({ page }) => {
 
   await hostelPage.navigateToFloors();
   await hostelPage.addFloor({
-    name: 'floor tushar 6',
+    name: floorName,
     capacity: '10',
-    buildingOption: 'tushar building 6 (The Baap',
+    buildingOption: `${buildingName} (The Baap`,
   });
 
   await hostelPage.navigateToRooms();
   await hostelPage.addRoom({
-    name: 'tushars room 6',
-    buildingOption: 'tushar building 6 (The Baap',
+    name: roomName,
+    buildingOption: `${buildingName} (The Baap`,
     capacity: '4',
   });
 
   await hostelPage.navigateToHostelFeesTemplate();
   await hostelPage.addHostelTemplate({
-    name: 'tushar tamplate 6',
+    name: templateName,
     paymentTypeOption: 'Demo creds',
-    feesName: 'tushar',
+    feesName: feesName,
     amount: '3000',
   });
 
   await hostelPage.navigateToMemberships();
   await hostelPage.addMember({
     studentName: undefined, // selects first option
-    buildingOption: 'tushar building 6',
+    buildingOption: buildingName,
     startDay: '22',
     endDay: '25',
     roomOption: undefined,
