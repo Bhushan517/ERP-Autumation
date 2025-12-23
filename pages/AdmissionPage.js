@@ -48,7 +48,7 @@ class AdmissionPage {
 
   async generateEmail() {
     await this.page.locator('.h-\\[40px\\].w-\\[60px\\] > .text-\\[var\\(--text-color\\)\\] > path').first().click();
-    await this.page.getByRole('button', { name: 'Generate' }).click();
+    // await this.page.getByRole('button', { name: 'Generate' }).click();
   }
 
   async enterPhoneNumber(phoneNumber) {
@@ -58,7 +58,7 @@ class AdmissionPage {
 
   async generatePhone() {
     await this.page.locator('.h-\\[40px\\].w-\\[60px\\] > .text-\\[var\\(--text-color\\)\\] > path').click();
-    await this.page.getByRole('button', { name: 'Generate' }).click();
+    // await this.page.getByRole('button', { name: 'Generate' }).click();
   }
 
   async selectCourse(course) {

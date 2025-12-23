@@ -16,32 +16,36 @@ test('test', async ({ page }) => {
 
   await dashboardPage.navigateToAdmissions();
 
+  const uniqueId = `${Date.now()}`;
+  const uniqueEmail = `sanket${uniqueId}@gmail.com`;
+  const uniquePhone = `8${Math.floor(100000000 + Math.random() * 900000000)}`; // 10-digit starting with 8
+
   await admissionPage.createAdmission({
     title: 'Mr',
-    firstName: 'tushar ',
+    firstName: 'sanket ',
     lastName: 'sangle',
     gender: 'Male',
     date: '1',
     location: 'The Baap Company',
-    email: 'ritesh@gmail.com',
-    phoneNumber: '8767629834',
+    email: uniqueEmail,
+    phoneNumber: uniquePhone,
     course: 'BBA',
     year: '10th'
   });
 
-  await admissionPage.clickStudentName('Mr. Tushar Sangle');
+  await admissionPage.clickStudentName('Mr. sanket Sangle');
   await feesDetailsPage.clickFeesDetails();
   await feesDetailsPage.selectTemplate('template');
   await feesDetailsPage.clickAdd();
-  await feesDetailsPage.addInstallment('5000', '23');
+  await feesDetailsPage.addInstallment('50', '23');
   await feesDetailsPage.processPayment();
 
   // await feesDetailsPage.clickBack();
   await feesTemplatePage.clickFeesTemplate();
   await feesTemplatePage.createTemplate({
-    name: 'bhushan',
-    paymentTypeName: 'bhushan',
-    amount: '3000',
+    name: `sanket-${uniqueId}`,
+    paymentTypeName: `sanket-${uniqueId}`,
+    amount: '30',
     type: 'fees'
   });
 });
