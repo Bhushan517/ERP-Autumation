@@ -3,6 +3,15 @@ class AdmissionQaPage {
     this.page = page;
   }
 
+
+   async clickAdmissionAndFees() {
+    await this.page.getByTestId('menu-item-admission-&-fees').click();
+  }
+
+  async clickAdmissions() {
+    await this.page.getByTestId('submenu-item-admissions').click();
+  }
+
   async clickAddAdmissionButton() {
     await this.page.getByTestId('AF-add-admission-button').click();
   }
@@ -48,7 +57,7 @@ class AdmissionQaPage {
   }
 
   async generateEmail() {
-    await this.page.locator('.h-\\[40px\\].w-\\[60px\\] > .text-\\[var\\(--text-color\\)\\] > path').first().click();
+    await this.page.getByTestId('AF-verify-email').click();
   }
 
   async enterPhone(phone) {
@@ -57,7 +66,7 @@ class AdmissionQaPage {
   }
 
   async generatePhone() {
-    await this.page.locator('.h-\\[40px\\].w-\\[60px\\] > .text-\\[var\\(--text-color\\)\\] > path').click();
+    await this.page.getByTestId('AF-verify-phone').click();
   }
 
   async selectCourse(course) {
@@ -79,20 +88,37 @@ class AdmissionQaPage {
   }
 
   async createAdmission(admissionData) {
+     await this.clickAdmissionAndFees();
+     await this.page.waitForTimeout(500);
+    await this.clickAdmissions();
     await this.clickAddAdmissionButton();
+    await this.page.waitForTimeout(500);
     await this.enterPRN(admissionData.prn);
+    await this.page.waitForTimeout(300);
     await this.selectTitle(admissionData.title);
+    await this.page.waitForTimeout(300);
     await this.enterFirstName(admissionData.firstName);
+    await this.page.waitForTimeout(300);
     await this.enterLastName(admissionData.lastName);
+    await this.page.waitForTimeout(300);
     await this.selectGender(admissionData.gender);
+    await this.page.waitForTimeout(300);
     await this.selectDate(admissionData.date);
+    await this.page.waitForTimeout(300);
     await this.selectLocation(admissionData.location);
+    await this.page.waitForTimeout(300);
     await this.enterEmail(admissionData.email);
+    await this.page.waitForTimeout(300);
     await this.generateEmail();
+    await this.page.waitForTimeout(300);
     await this.enterPhone(admissionData.phoneNumber);
+    await this.page.waitForTimeout(300);
     await this.generatePhone();
+    await this.page.waitForTimeout(300);
     await this.selectCourse(admissionData.course);
+    await this.page.waitForTimeout(300);
     await this.selectYear(admissionData.year);
+    await this.page.waitForTimeout(500);
     await this.clickSave();
   }
 }

@@ -4,7 +4,7 @@ class FeesTemplateQaPage {
   }
 
   async clickFeesTemplate() {
-    await this.page.getByRole('link', { name: 'Fees Template', exact: true }).click();
+    await this.page.getByTestId('submenu-item-fees-template').click();
   }
 
   async clickAddNew() {
