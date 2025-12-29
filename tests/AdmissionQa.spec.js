@@ -4,7 +4,7 @@ import AdmissionQaPage from '../pages/AdmissionQaPage.js';
 import FeesDetailsQaPage from '../pages/FeesDetailsQaPage.js';
 import FeesTemplateQaPage from '../pages/FeesTemplateQaPage.js';
 
-test('test', async ({ page }) => {
+test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
   const loginQaPage = new LoginQaPage(page);
   const admissionQaPage = new AdmissionQaPage(page);
   const feesDetailsQaPage = new FeesDetailsQaPage(page);

@@ -10,7 +10,7 @@ const uniqueText = (prefix = 'text') =>
 const uniqueZip = () =>
   (400000 + Math.floor(Math.random() * 100000)).toString();
 
-test('test', async ({ page }) => {
+test('Admission QA - Update Admission Details', async ({ page }) => {
   const loginQaPage = new LoginQaPage(page);
   const admissionQaPage = new AdmissionQaPage(page);
 
