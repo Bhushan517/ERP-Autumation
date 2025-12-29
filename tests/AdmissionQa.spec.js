@@ -31,7 +31,7 @@ test('test', async ({ page }) => {
     firstName: firstName,
     lastName: lastName,
     gender: 'Male',
-    date: '23',
+    date: currentDate,
     location: 'Baap company',
     email: uniqueEmail,
     phoneNumber: uniquePhone,
