@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 import LoginQaPage from '../pages/LoginQaPage.js';
-import DashboardPage from '../pages/DashboardPage.js';
 import AdmissionQaPage from '../pages/AdmissionQaPage.js';
 import FeesDetailsQaPage from '../pages/FeesDetailsQaPage.js';
 import FeesTemplateQaPage from '../pages/FeesTemplateQaPage.js';
