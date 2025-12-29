@@ -1,241 +1,133 @@
-// import { test, expect } from '@playwright/test';
-
-// test('test', async ({ page }) => {
-//   await page.goto('https://qa.d3kq8oy4csoq2n.amplifyapp.com/');
-//   await page.getByTestId('SI-username-input-password').click();
-//   await page.getByTestId('SI-username-input-password').fill('9699342811+2');
-//   await page.getByTestId('SI-password-input-password').click();
-//   await page.getByTestId('SI-password-input-password').fill('Ritesh@123');
-//   await page.getByTestId('SI-submit-button-show').click();
-//   await page.getByRole('button', { name: 'Admission & Fees' }).click();
-//   await page.getByRole('link', { name: 'Admissions' }).click();
-//  await page.getByText('Mr. Ram Sham').first().click();  
-//   await page.getByTestId('AI-PD-edit-contact-info-button').click();
-//   await page.getByTestId('AI-PD-permanent-zip-code-input').click();
-//   await page.getByTestId('AI-PD-permanent-zip-code-input').fill('422611');
-//   await page.getByTestId('AI-PD-permanent-state-input').click();
-//   await page.getByTestId('AI-PD-permanent-state-input').fill('MH');
-//   await page.getByTestId('AI-PD-permanent-city-input').click();
-//   await page.getByTestId('AI-PD-permanent-city-input').fill('sangamner');
-//   await page.getByTestId('AI-PD-permanent-country-dropdown').getByText('Select Country').click();
-//   await page.getByText('India').click();
-//   await page.getByTestId('AI-PD-permanent-locality-input').click();
-//   await page.getByTestId('AI-PD-permanent-locality-input').fill('low');
-//   await page.getByTestId('AI-PD-permanent-street-input').click();
-//   await page.getByTestId('AI-PD-permanent-street-input').fill('Mh');
-//   await page.getByTestId('AI-PD-permanent-house-no-input').click();
-//   await page.getByTestId('AI-PD-permanent-house-no-input').fill('house');
-//   await page.getByTestId('AI-PD-permanent-village-input').click();
-//   await page.getByTestId('AI-PD-permanent-village-input').fill('no');
-//   await page.getByTestId('AI-PD-family-member-name-input-0').click();
-//   await page.getByTestId('AI-PD-family-member-name-input-0').fill('somnath');
-//   await page.getByTestId('AI-PD-family-member-email-input-0').click();
-//   await page.getByTestId('AI-PD-family-member-email-input-0').fill('somnath12@gmail.com');
-//   await page.getByTestId('AI-PD-family-member-phone-input-0').click();
-//   await page.getByTestId('AI-PD-family-member-phone-input-0').fill('7656577878');
-//   await page.getByTestId('AI-PD-family-member-whatsapp-checkbox-0').check();
-//   await page.getByTestId('AI-PD-save-personal-details-button').click();
-//   await page.getByText('Select Blood Group').click();
-//   await page.getByText('A+').click();
-//   await page.getByTestId('AI-PD-save-personal-details-button').click();
-//   await page.getByTestId('EA-tab-academic-info').click();
-//   await page.getByTestId('AI-A-edit-icon').click();
-//   await page.getByTestId('AI-A-course-input').click();
-//   await page.getByTestId('AI-A-class-input').click();
-//   await page.getByTestId('AI-A-prn-no-input').click();
-//   await page.getByTestId('AI-A-roll-no-input').click();
-//   await page.getByTestId('AI-A-place-of-birth-input').click();
-//   await page.getByTestId('AI-A-remote').check();
-//   await page.getByTestId('AI-A-admission-executive-name').click();
-//   await page.getByTestId('AI-A-admission-executive-phone').click();
-//   await page.getByTestId('AI-A-custom-field-key-0').click();
-//   await page.getByTestId('AI-A-custom-field-value-0').click();
-//   await page.getByTestId('AI-A-save-button').click();
-//   await page.getByTestId('EA-tab-notes').click();
-//   await page.getByTestId('AI-N-title').click();
-//   await page.getByTestId('AI-N-title').fill('boock');
-//   await page.getByTestId('AI-N-description').click();
-//   await page.getByTestId('AI-N-description').fill('no');
-//   await page.getByTestId('AI-N-approver').click();
-//   await page.getByTestId('AI-N-approver-dropdown').getByText('pankaj pawar').click();
-//   await page.getByTestId('AI-N-date').click();
-//   await page.getByRole('button', { name: '1', exact: true }).click();
-//   await page.getByTestId('AI-N-save-btn').click();
-//   await page.getByTestId('EA-back-button').click();
-// });
-
-
-
-// import { test, expect } from '@playwright/test';
-
-// test('test', async ({ page }) => {
-//   await page.goto('https://qa.d3kq8oy4csoq2n.amplifyapp.com/');
-//   await page.getByTestId('SI-username-input-password').click();
-//   await page.getByTestId('SI-username-input-password').fill('9699342811+2');
-//   await page.getByTestId('SI-password-input-password').click();
-//   await page.getByTestId('SI-password-input-password').fill('Ritesh@123');
-//   await page.getByTestId('SI-password-input-password').press('Enter');
-//   await page.getByTestId('menu-item-admission-&-fees').click();
-//   await page.getByTestId('submenu-item-admissions').click();
-//   await page.getByTestId('AF-add-admission-button').click();
-//   await page.getByTestId('AF-student-prn-input').click();
-//   await page.getByTestId('AF-student-prn-input').fill('6789');
-//   await page.getByTestId('AF-student-title-dropdown').click();
-//   await page.getByTestId('AF-student-title-option-Mr').click();
-//   await page.getByTestId('AF-student-first-name').click();
-//   await page.getByTestId('AF-student-first-name').fill('fghjhgfvghj');
-//   await page.getByTestId('AF-student-last-name').click();
-//   await page.getByTestId('AF-student-last-name').fill('fghbjhvbnm');
-//   await page.getByTestId('AF-student-gender-dropdown').click();
-//   await page.getByTestId('AF-student-gender-options').locator('div').filter({ hasText: /^Male$/ }).click();
-//   await page.getByTestId('AF-student-dob-input').click();
-//   await page.getByTestId('AF-student-dob-field').getByRole('button', { name: '1', exact: true }).click();
-//   await page.getByTestId('AF-student-location-textbox').click();
-//   await page.getByTestId('AF-student-location-option-ef8ffae7-1c54-4570-8027-02f35e8017bd').click();
-//   await page.locator('.css-1995squ-control > .css-hlgwow > .css-15ol6m4').first().click();
-//   await page.getByRole('option', { name: 'BCA' }).click();
-//   await page.locator('.css-1995squ-control > .css-hlgwow > .css-15ol6m4').first().click();
-//   await page.getByRole('option', { name: 'second year' }).click();
-//   await page.getByTestId('AF-student-save-button').click();
-//   await page.getByTestId('AF-close-student-sidebar').click();
-//   await page.getByTestId('AF-admission-name-15946b4a-02a5-42de-81c0-2de870e39cd6').getByText('Mr. Ram Sham').click();
-//   await page.getByTestId('EA-tab-fees-details').click();
-//   await page.getByTestId('AI-FD-template-select').click();
-//   await page.getByTestId('AI-FD-template-dropdown-list').getByText('sujit').click();
-//   await page.getByTestId('AI-FD-add-template').click();
-//   await page.getByTestId('AI-FD-add-installment').click();
-//   await page.getByTestId('AI-FD-installment-amount-input').click();
-//   await page.getByTestId('AI-FD-installment-amount-input').fill('300');
-//   await page.getByTestId('AI-FD-installment-dueon').click();
-//   await page.getByRole('button', { name: '24' }).click();
-//   await page.getByTestId('AI-FD-save-installments').click();
-//   await page.getByText('Sujit').click();
-//   await page.getByText('Installment', { exact: true }).click();
-//   await page.getByTestId('AI-FD-get-payment-btn-0-1').click();
-//   await page.getByTestId('AI-PAY-save-btn').first().click();
-//   await page.getByTestId('EA-back-button').click();
-// });
-
-
-
 import { test, expect } from '@playwright/test';
+test.setTimeout(120000); 
+
+const uniqueText = (prefix = 'text') =>
+  `${prefix}_${Date.now()}`;
+
+const uniqueZip = () =>
+  (400000 + Math.floor(Math.random() * 100000)).toString();
 
 test('test', async ({ page }) => {
   await page.goto('https://qa.d3kq8oy4csoq2n.amplifyapp.com/');
-  await page.getByTestId('SI-username-input-password').click();
+  await page.waitForTimeout(1500);
+
   await page.getByTestId('SI-username-input-password').fill('9699342811+2');
-  await page.getByTestId('SI-password-input-password').click();
+  await page.waitForTimeout(800);
+
   await page.getByTestId('SI-password-input-password').fill('Ritesh@123');
+  await page.waitForTimeout(800);
+
   await page.getByTestId('SI-submit-button-show').click();
+  await page.waitForTimeout(2000);
+
   await page.getByTestId('menu-item-admission-&-fees').click();
+  await page.waitForTimeout(1000);
+
   await page.getByTestId('submenu-item-admissions').click();
-  await page.getByTestId('AF-add-admission-button').click();
-  await page.getByTestId('AF-student-title-dropdown').click();
-  await page.getByTestId('AF-student-title-option-Mr').click();
-  await page.getByTestId('AF-student-gender-dropdown').click();
-  await page.getByTestId('AF-student-gender-options').locator('div').filter({ hasText: /^Male$/ }).click();
-  await page.locator('.css-1995squ-control > .css-hlgwow > .css-15ol6m4').first().click();
-  await page.getByRole('option', { name: 'BCA' }).click();
-  await page.locator('.css-1995squ-control > .css-hlgwow > .css-15ol6m4').first().click();
-  await page.getByRole('option', { name: 'First Year' }).click();
-  await page.getByTestId('AF-close-student-sidebar').click();
+  await page.waitForTimeout(1500);
 
+  await page.getByText('Mr. Ram Sham').first().click();
+  await page.waitForTimeout(1500);
 
-  
-  await page.getByTestId('menu-item-payroll-management').click();
-  await page.getByTestId('submenu-item-payroll-configuration').click();
-  await page.getByTestId('PM-PC-edit-config-214340cf-06c3-4e80-933b-a13c9e297aba').click();
-  await page.getByTestId('PM-PCC-component-type-input').click();
-  await page.getByText('Earning').click();
-  await page.getByTestId('PM-PCC-component-category-input').click();
-  await page.getByTestId('PM-PCC-add-component-config-page').getByText('Basic').click();
-  await page.getByTestId('PM-PCC-next-component-button').click();
-  await page.getByTestId('PM-PCC-component-display-order-input').fill('1');
-  await page.getByTestId('PM-PCC-next-component-button').click();
-  await page.getByTestId('PM-PCC-fixed-amount-input').click();
-  await page.getByTestId('PM-PCC-fixed-amount-input').fill('5000');
-  await page.getByTestId('PM-PCC-next-component-button').click();
-  await page.getByTestId('PM-PCC-create-component-button').click();
-  await page.getByTestId('submenu-item-salary-revision').click();
-  await page.getByTestId('SR-AR-create-revision-button').click();
-  await page.getByText('Mayur sanapgggDepartment:').click();
-  await page.getByTestId('PM-SR-CR-generate-revision-next').click();
-  await page.getByRole('textbox', { name: 'Select date' }).click();
+  await page.getByTestId('AI-PD-edit-contact-info-button').click();
+  await page.waitForTimeout(1000);
+
+  await page.getByTestId('AI-PD-permanent-house-no-input')
+    .fill(uniqueText('house'));
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-PD-permanent-village-input')
+    .fill(uniqueText('village'));
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-PD-permanent-locality-input')
+    .fill(uniqueText('locality'));
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-PD-permanent-street-input')
+    .fill(uniqueText('street'));
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-PD-permanent-city-input')
+    .fill(uniqueText('city'));
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-PD-permanent-state-input')
+    .fill('MH');
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-PD-permanent-country-dropdown').click();
+  await page.waitForTimeout(1000);
+
+  await page
+    .getByTestId('AI-PD-permanent-country-options')
+    .getByText('India', { exact: true })
+    .click();
+  await page.waitForTimeout(800);
+
+  await page.getByTestId('AI-PD-permanent-zip-code-input')
+    .fill(uniqueZip());
+  await page.waitForTimeout(800);
+
+  await page.locator('.border > .w-4').first().click();
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-PD-blood-group-option-A+').click();
+  await page.waitForTimeout(800);
+
+  await page.getByTestId('AI-PD-save-personal-details-button').click();
+  await page.waitForTimeout(2000);
+
+  await page.getByTestId('EA-tab-academic-info').click();
+  await page.waitForTimeout(1000);
+
+  await page.getByTestId('AI-A-edit-icon').click();
+  await page.waitForTimeout(1000);
+
+  await expect(page.getByTestId('AI-A-save-button')).toBeVisible();
+
+  await page.getByTestId('AI-A-roll-no-input')
+    .fill(String(Math.floor(Math.random() * 100)));
+  await page.waitForTimeout(800);
+
+  await page.getByTestId('AI-A-save-button').click();
+  await page.waitForTimeout(1500);
+
+  await page.getByTestId('EA-tab-notes').click();
+  await page.waitForTimeout(1000);
+
+  await page.getByTestId('AI-N-title')
+    .fill(uniqueText('note'));
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-N-description')
+    .fill(uniqueText('desc'));
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-N-approver').click();
+  await page.waitForTimeout(800);
+
+  await page
+    .getByTestId('AI-N-approver-dropdown')
+    .getByText('bhushan rahut', { exact: true })
+    .click();
+  await page.waitForTimeout(800);
+
+  await page.getByTestId('AI-N-date').click();
+  await page.waitForTimeout(500);
+
   await page.getByRole('button', { name: '1', exact: true }).click();
-  await page.getByTestId('PM-SR-CR-new-ctc-annual-input').click();
-  await page.getByTestId('PM-SR-CR-new-ctc-annual-input').fill('50,0000');
-  await page.getByTestId('PM-SR-CR-gross-amount-input').click();
-  await page.getByTestId('PM-SR-CR-gross-amount-input').fill('40,0000');
-  await page.getByTestId('PM-SR-CR-varaible-pay-input').click();
-  await page.getByTestId('PM-SR-CR-varaible-pay-input').fill('10,0000');
-  await page.getByTestId('PM-SR-CR-next-step-2').click();
-  await page.getByTestId('PM-SR-CR-next-step-3').click();
-  await page.getByTestId('PM-SR-CR-mismatch-continue').click();
-  await page.getByTestId('PM-SR-CR-approval-workflow-toggle').click();
-  await page.getByTestId('PM-SR-CR-save-revision').click();
-  await page.getByTestId('SRT-salary-tab-my-approval').click();
-  await page.getByTestId('SRT-salary-tab-all-revisions').click();
-  await page.getByText('Mr. Mayur sanap').click();
-  await page.getByTestId('SRV-tab-workflow').click();
-  await page.locator('.lucide.lucide-chevron-right').first().click();
-  await page.getByTestId('AM-AR-ARD-W-approve-button-0-0').click();
-  await page.locator('.lucide.lucide-chevron-right').click();
-  await page.getByTestId('AM-AR-ARD-W-approve-button-1-0').click();
-  await page.getByTestId('SRV-back-button').click();
-  await page.getByTestId('submenu-item-my-pay').click();
-  await page.getByTestId('PM-MYTB-my-pay-tab-payslip').click();
-  await page.getByTestId('PM-MYTB-my-pay-tab-revisions').click();
-  await page.getByTestId('PM-MYTB-my-pay-tab-mytax').click();
-  await page.getByTestId('submenu-item-run-payroll').click();
-  await page.getByTestId('RP-AP-run-payroll-button').click();
-  await page.getByTestId('PM-RPC-next-step-button').click();
-  await page.locator('.relative.text-\\[var\\(--secondary-text-color\\)\\] > svg > path').click();
-  await page.locator('div').filter({ hasText: /^2$/ }).nth(1).click();
-  await page.getByText('Present').nth(2).click();
-  await page.locator('span').filter({ hasText: /^3$/ }).click();
-  await page.getByText('Present').nth(2).click();
-  await page.locator('div').filter({ hasText: /^4$/ }).click();
-  await page.locator('div').filter({ hasText: /^Present$/ }).nth(3).click();
-  await page.locator('div:nth-child(13) > .w-2').click();
-  await page.getByText('Present').nth(2).click();
-  await page.getByText('9', { exact: true }).click();
-  await page.getByText('Present').nth(2).click();
-  await page.locator('div').filter({ hasText: /^10$/ }).first().click();
-  await page.getByText('Present').nth(2).click();
-  await page.getByRole('button', { name: 'Save' }).click();
-  await page.getByTestId('PM-RPC-next-step-button').click();
-  await page.getByTestId('PM-RPC-submit-payroll-button').click();
-  await page.getByTestId('PM-RPC-run-payroll-back-bottom').click();
-  await page.getByTestId('PM-RPC-run-payroll-back-bottom').click();
-  await page.getByText('December').click();
-  await page.getByText('January').click();
-  await page.getByText('2025').click();
-  await page.getByText('2023').click();
-  await page.getByTestId('PM-RPC-next-step-button').click();
-  await page.locator('.relative.text-\\[var\\(--secondary-text-color\\)\\] > svg').click();
-  await page.locator('div').filter({ hasText: /^3$/ }).nth(1).click();
-  await page.getByText('Present').nth(2).click();
-  await page.locator('div').filter({ hasText: /^4$/ }).click();
-  await page.getByText('Present').nth(2).click();
-  await page.locator('div').filter({ hasText: /^5$/ }).click();
-  await page.locator('div').filter({ hasText: /^Present$/ }).nth(3).click();
-  await page.getByRole('button', { name: 'Save' }).click();
-  await page.getByTestId('PM-RPC-next-step-button').click();
-  await page.getByTestId('PM-RPC-submit-payroll-button').click();
-  await page.locator('.text-\\[var\\(--secondary-text-color\\)\\].hover\\:text-\\[var\\(--text-color\\)\\]').click();
-  await page.getByTestId('RP-RP-tab-all-approvals').click();
-  await page.getByTestId('RP-RP-tab-all-payrolls').click();
-  await page.getByTestId('RP-AP-payroll-row-1a3ece26-feeb-4ccd-925b-cf33cb9e9a81').getByRole('cell', { name: 'January-' }).click();
-  await page.getByTestId('PM-VRP-tab-Workflow').click();
-  await page.locator('.lucide.lucide-chevron-right').first().click();
-  await page.getByTestId('AM-AR-ARD-W-approve-button-0-0').click();
-  await page.locator('.lucide.lucide-chevron-right').click();
-  await page.getByTestId('AM-AR-ARD-W-approve-button-1-0').click();
-  await page.getByTestId('PM-VRP-back-button').click();
-  await page.getByTestId('submenu-item-generate-payslip').click();
-  const downloadPromise = page.waitForEvent('download');
-  await page.getByTestId('PM-GP-download-payslip-795fd657-4500-4e73-a565-5340330b5b4a').click();
-  const download = await downloadPromise;
-  await page.getByText('Mr. Mayur sanap').click();
-  await page.getByTestId('PM-VGP-back-button').click();
+  await page.waitForTimeout(500);
+
+  await page.getByTestId('AI-N-save-btn').click();
+  await page.waitForTimeout(1500);
+
+  await page.getByTestId('EA-tab-fees-details').click();
+  await page.waitForTimeout(1000);
+
+  await page.getByTestId('EA-tab-academic-info').click();
+  await page.waitForTimeout(1000);
+
+  await page.getByTestId('EA-tab-personal-details').click();
+  await page.waitForTimeout(1000);
 });
