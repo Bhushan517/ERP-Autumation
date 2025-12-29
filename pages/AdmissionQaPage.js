@@ -1,3 +1,5 @@
+import { expect } from '@playwright/test';
+
 class AdmissionQaPage {
   constructor(page) {
     this.page = page;
@@ -85,6 +87,115 @@ class AdmissionQaPage {
 
   async clickStudentName(studentName) {
     await this.page.getByText(studentName).first().click();
+  }
+
+  async navigateToAdmissions() {
+    await this.clickAdmissionAndFees();
+    await this.page.waitForTimeout(1000);
+    await this.clickAdmissions();
+    await this.page.waitForTimeout(1500);
+  }
+
+  async updatePersonalDetails(personalData) {
+    await this.page.getByTestId('AI-PD-edit-contact-info-button').click();
+    await this.page.waitForTimeout(1000);
+
+    await this.page.getByTestId('AI-PD-permanent-house-no-input').fill(personalData.houseNo);
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-PD-permanent-village-input').fill(personalData.village);
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-PD-permanent-locality-input').fill(personalData.locality);
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-PD-permanent-street-input').fill(personalData.street);
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-PD-permanent-city-input').fill(personalData.city);
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-PD-permanent-state-input').fill(personalData.state);
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-PD-permanent-country-dropdown').click();
+    await this.page.waitForTimeout(1000);
+
+    await this.page
+      .getByTestId('AI-PD-permanent-country-options')
+      .getByText(personalData.country, { exact: true })
+      .click();
+    await this.page.waitForTimeout(800);
+
+    await this.page.getByTestId('AI-PD-permanent-zip-code-input').fill(personalData.zipCode);
+    await this.page.waitForTimeout(800);
+
+    await this.page.locator('.border > .w-4').first().click();
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId(`AI-PD-blood-group-option-${personalData.bloodGroup}`).click();
+    await this.page.waitForTimeout(800);
+
+    await this.page.getByTestId('AI-PD-save-personal-details-button').click();
+    await this.page.waitForTimeout(2000);
+  }
+
+  async updateAcademicInfo(academicData) {
+    await this.page.getByTestId('EA-tab-academic-info').click();
+    await this.page.waitForTimeout(1000);
+
+    await this.page.getByTestId('AI-A-edit-icon').click();
+    await this.page.waitForTimeout(1000);
+
+    await expect(this.page.getByTestId('AI-A-save-button')).toBeVisible();
+
+    if (academicData.rollNo) {
+      await this.page.getByTestId('AI-A-roll-no-input').fill(academicData.rollNo);
+      await this.page.waitForTimeout(800);
+    }
+
+    await this.page.getByTestId('AI-A-save-button').click();
+    await this.page.waitForTimeout(1500);
+  }
+
+  async addNote(noteData) {
+    await this.page.getByTestId('EA-tab-notes').click();
+    await this.page.waitForTimeout(1000);
+
+    await this.page.getByTestId('AI-N-title').fill(noteData.title);
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-N-description').fill(noteData.description);
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-N-approver').click();
+    await this.page.waitForTimeout(800);
+
+    await this.page
+      .getByTestId('AI-N-approver-dropdown')
+      .getByText(noteData.approver, { exact: true })
+      .click();
+    await this.page.waitForTimeout(800);
+
+    await this.page.getByTestId('AI-N-date').click();
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByRole('button', { name: noteData.dateDay, exact: true }).click();
+    await this.page.waitForTimeout(500);
+
+    await this.page.getByTestId('AI-N-save-btn').click();
+    await this.page.waitForTimeout(1500);
+  }
+
+  async clickTab(tabName) {
+    const tabMap = {
+      'personal-details': 'EA-tab-personal-details',
+      'academic-info': 'EA-tab-academic-info',
+      'fees-details': 'EA-tab-fees-details',
+      'notes': 'EA-tab-notes'
+    };
+    await this.page.getByTestId(tabMap[tabName]).click();
+    await this.page.waitForTimeout(1000);
   }
 
   async createAdmission(admissionData) {
