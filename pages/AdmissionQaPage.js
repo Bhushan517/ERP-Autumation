@@ -232,6 +232,45 @@ class AdmissionQaPage {
     await this.page.waitForTimeout(500);
     await this.clickSave();
   }
+
+  async clickEditAdmission() {
+    await this.page.getByTestId('AF-edit-admission').first().click();
+    await this.page.waitForTimeout(1000);
+  }
+
+  async changeStatusToCanceled() {
+    await this.page.getByRole('button', { name: 'Confirmed' }).click();
+    await this.page.waitForTimeout(500);
+    await this.page.getByText('Canceled').click();
+    await this.page.waitForTimeout(500);
+  }
+
+  async deleteAdmission() {
+    await this.page.getByTestId('AF-delete-admission').first().click();
+    await this.page.waitForTimeout(1000);
+    await this.page.getByTestId('AF-Delete-confirm').click();
+    await this.page.waitForTimeout(1500);
+  }
+
+  async clickFilterButton() {
+    await this.page.getByTestId('AF-filter-button').click();
+    await this.page.waitForTimeout(500);
+  }
+
+  async closeFilter() {
+    await this.page.getByTestId('AI-close-filter-button').click();
+    await this.page.waitForTimeout(500);
+  }
+
+  async clickInviteButton() {
+    await this.page.getByTestId('AF-invite-button').click();
+    await this.page.waitForTimeout(500);
+  }
+
+  async closeInviteModal() {
+    await this.page.getByTestId('AI-close-button').click();
+    await this.page.waitForTimeout(500);
+  }
 }
 
 export default AdmissionQaPage;
