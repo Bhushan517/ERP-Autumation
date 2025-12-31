@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import LoginQaPage from '../pages/LoginQaPage.js';
-import AdmissionQaPage from '../pages/AdmissionQaPage.js';
+import LoginQaPage from '../pages/login/LoginQaPage.js';
+import AdmissionQaPage from '../pages/admission/AdmissionQaPage.js';
 
 test.setTimeout(120000);
 

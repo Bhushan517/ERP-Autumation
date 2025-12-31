@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
-import LoginQaPage from '../pages/LoginQaPage.js';
-import AdmissionQaPage from '../pages/AdmissionQaPage.js';
-import FeesDetailsQaPage from '../pages/FeesDetailsQaPage.js';
-import FeesTemplateQaPage from '../pages/FeesTemplateQaPage.js';
+import LoginQaPage from '../pages/login/LoginQaPage.js';
+import AdmissionQaPage from '../pages/admission/AdmissionQaPage.js';
+import FeesDetailsQaPage from '../pages/admission/FeesDetailsQaPage.js';
+import FeesTemplateQaPage from '../pages/admission/FeesTemplateQaPage.js';
 
 test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
   const loginQaPage = new LoginQaPage(page);
