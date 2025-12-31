@@ -5,72 +5,90 @@ class FeesTemplatePage {
 
   async navigateToFeesTemplate() {
     await this.page.getByTestId('submenu-item-hostel-fees-template').click();
-    await this.page.waitForTimeout(1000);
+    
+    // Wait for navigation
+    await this.page.waitForURL('**/hostel/fees/template**', { timeout: 10000 });
+    await this.page.waitForLoadState('networkidle');
+    
+    // Wait for Add button to be visible
+    await this.page.getByTestId('H-HFT-add-hostel-template-button').waitFor({ 
+      state: 'visible', 
+      timeout: 10000 
+    });
   }
 
   async clickAddTemplate() {
     await this.page.getByTestId('H-HFT-add-hostel-template-button').click();
-    await this.page.waitForTimeout(500);
+    
+    // Wait for modal/form to appear
+    await this.page.getByTestId('H-HFT-Add-name-input').waitFor({ 
+      state: 'visible', 
+      timeout: 5000 
+    });
   }
 
-  async enterTemplateName(templateName) {
+  async fillTemplateName(name) {
     await this.page.getByTestId('H-HFT-Add-name-input').click();
-    await this.page.getByTestId('H-HFT-Add-name-input').fill(templateName);
-    await this.page.waitForTimeout(300);
+    await this.page.getByTestId('H-HFT-Add-name-input').fill(name);
   }
 
-  async selectPaymentType(paymentType) {
+  async selectPaymentType(type) {
     await this.page.getByTestId('H-HFT-Add-payment-types-dropdown').getByText('Select Payment Types').click();
-    await this.page.waitForTimeout(500);
-    await this.page.locator('div').filter({ hasText: new RegExp(`^${paymentType}$`) }).nth(1).click();
-    await this.page.waitForTimeout(500);
+    await this.page.locator('div').filter({ hasText: new RegExp(`^${type}$`) }).nth(1).click();
   }
 
-  async toggleAllowInstallments() {
+  async closePaymentDropdown() {
     await this.page.locator('.w-4').first().click();
-    await this.page.waitForTimeout(300);
   }
 
   async clickAddComponent() {
     await this.page.getByTestId('H-HFT-Add-add-component-button').click();
-    await this.page.waitForTimeout(500);
+    
+    // Wait for component fields to appear
+    await this.page.getByTestId('H-HFT-Add-block-name-input-0').waitFor({ 
+      state: 'visible', 
+      timeout: 5000 
+    });
   }
 
-  async enterComponentName(index, componentName) {
+  async fillComponentDetails(index, name, amount) {
     await this.page.getByTestId(`H-HFT-Add-block-name-input-${index}`).click();
-    await this.page.getByTestId(`H-HFT-Add-block-name-input-${index}`).fill(componentName);
-    await this.page.waitForTimeout(300);
-  }
-
-  async enterComponentAmount(index, amount) {
+    await this.page.getByTestId(`H-HFT-Add-block-name-input-${index}`).fill(name);
+    
     await this.page.getByTestId(`H-HFT-Add-block-Amount-input-${index}`).click();
     await this.page.getByTestId(`H-HFT-Add-block-Amount-input-${index}`).fill(amount);
-    await this.page.waitForTimeout(300);
   }
 
   async clickAddSubComponent(index) {
     await this.page.getByTestId(`H-HFT-Add-add-component-button-${index}`).click();
-    await this.page.waitForTimeout(500);
   }
 
   async clickSave() {
     await this.page.getByTestId('H-HFT-Add-save-button').click();
-    await this.page.waitForTimeout(1500);
+    
+    // Wait for success notification or page navigation
+    // Option 1: Wait for success toast
+    await this.page.locator('.toast-success, [role="alert"]').waitFor({ 
+      state: 'visible', 
+      timeout: 5000 
+    }).catch(() => {
+      // If no toast, wait for modal to close
+      return this.page.getByTestId('H-HFT-Add-save-button').waitFor({ 
+        state: 'hidden', 
+        timeout: 5000 
+      });
+    });
   }
 
   async createTemplate(templateData) {
-    await this.enterTemplateName(templateData.name);
+    await this.fillTemplateName(templateData.name);
     await this.selectPaymentType(templateData.paymentType);
-    await this.toggleAllowInstallments();
+    await this.closePaymentDropdown();
     await this.clickAddComponent();
-    await this.enterComponentName(0, templateData.componentName);
-    await this.enterComponentAmount(0, templateData.amount);
-    if (templateData.addSubComponent) {
-      await this.clickAddSubComponent(0);
-    }
+    await this.fillComponentDetails(0, templateData.componentName, templateData.amount);
+    await this.clickAddSubComponent(0);
     await this.clickSave();
   }
 }
 
 export default FeesTemplatePage;
-
