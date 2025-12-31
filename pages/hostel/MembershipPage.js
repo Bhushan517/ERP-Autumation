@@ -4,7 +4,16 @@ class MembershipPage {
   }
 
   async navigateToMemberships() {
-    await this.page.getByTestId('submenu-item-memberships').click();
+    // Ensure Hostel menu is expanded first
+    const submenu = this.page.getByTestId('submenu-item-memberships');
+    const isVisible = await submenu.isVisible().catch(() => false);
+    
+    if (!isVisible) {
+      await this.page.getByTestId('menu-item-hostel').click();
+      await submenu.waitFor({ state: 'visible', timeout: 5000 });
+    }
+    
+    await submenu.click();
     
     // Wait for navigation to complete
     await this.page.waitForURL('**/hostel/addmission**', { timeout: 10000 });
