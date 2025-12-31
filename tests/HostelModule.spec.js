@@ -8,7 +8,6 @@ import MembershipPage from '../pages/hostel/MembershipPage.js';
 import HostelNavigationPage from '../pages/hostel/HostelNavigationPage.js';
 
 test('Hostel - Create building/floor/room/template/member with unique data', async ({ page }) => {
-  // प्रत्येक run ला वेगळा suffix - duplicate data टाळण्यासाठी
   const uniqueId = Date.now();
   const buildingName = `rox building ${uniqueId}`;
   const floorName = `rox floor ${uniqueId}`;
@@ -17,7 +16,6 @@ test('Hostel - Create building/floor/room/template/member with unique data', asy
   const componentName = `rozz ${uniqueId}`;
   const location = 'Baap company';
 
-  // Initialize page objects
   const loginQaPage = new LoginQaPage(page);
   const buildingPage = new BuildingPage(page);
   const floorPage = new FloorPage(page);
@@ -26,11 +24,9 @@ test('Hostel - Create building/floor/room/template/member with unique data', asy
   const membershipPage = new MembershipPage(page);
   const hostelNavigationPage = new HostelNavigationPage(page);
 
-  // Login
   await loginQaPage.login('9699342811+2', 'Ritesh@123');
   await page.waitForTimeout(2000);
 
-  // Create Building
   await buildingPage.navigateToBuildings();
   await buildingPage.createBuilding({
     name: buildingName,
@@ -41,7 +37,6 @@ test('Hostel - Create building/floor/room/template/member with unique data', asy
     incharge: 'Bhushan Rahut'
   });
 
-  // Create Floor
   await floorPage.navigateToFloors();
   await floorPage.clickAddFloor();
   await floorPage.createFloor({
@@ -51,7 +46,6 @@ test('Hostel - Create building/floor/room/template/member with unique data', asy
     location: location
   });
 
-  // Create Room
   await roomPage.navigateToRooms();
   await roomPage.clickAddRoom();
   await roomPage.createRoom({
@@ -61,7 +55,6 @@ test('Hostel - Create building/floor/room/template/member with unique data', asy
     capacity: '2'
   });
 
-  // Create Fees Template
   await feesTemplatePage.navigateToFeesTemplate();
   await feesTemplatePage.clickAddTemplate();
   await feesTemplatePage.createTemplate({
@@ -72,7 +65,6 @@ test('Hostel - Create building/floor/room/template/member with unique data', asy
     addSubComponent: true
   });
 
-  // Create Membership
   await membershipPage.navigateToMemberships();
   await membershipPage.clickAddMember();
   await membershipPage.createMembership({
@@ -82,7 +74,6 @@ test('Hostel - Create building/floor/room/template/member with unique data', asy
     endDate: '13'
   });
 
-  // Navigation checks
   await hostelNavigationPage.navigateToAttendance();
   await hostelNavigationPage.navigateToGatepassRequests();
   await hostelNavigationPage.navigateToGatepassApprovals();
