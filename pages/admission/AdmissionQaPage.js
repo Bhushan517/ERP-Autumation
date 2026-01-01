@@ -45,7 +45,12 @@ class AdmissionQaPage {
 
   async selectDate(day) {
     await this.page.getByTestId('AF-student-dob-input').click();
-    await this.page.getByRole('button', { name: day }).click();
+    await this.page.waitForTimeout(500);
+    const dateField = this.page.getByTestId('AF-student-dob-field');
+    
+    const dateButton = dateField.locator(`xpath=.//button[text()='${day}' and not(@disabled)]`).first();
+    await dateButton.waitFor({ state: 'visible', timeout: 5000 });
+    await dateButton.click();
   }
 
   async selectLocation(location) {

@@ -27,7 +27,7 @@ class FeesDetailsQaPage {
 
   async selectInstallmentDate(day) {
     await this.page.getByTestId('AI-FD-installment-dueon').click();
-    await this.page.getByRole('button', { name: day }).click();
+    await this.page.getByRole('button', { name: day }).first().click();
   }
 
   async saveInstallments() {
