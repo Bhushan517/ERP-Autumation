@@ -1,3 +1,4 @@
+// AdmissionQa.spec.js
 import { test, expect } from '@playwright/test';
 import LoginQaPage from '../pages/login/LoginQaPage.js';
 import AdmissionQaPage from '../pages/admission/AdmissionQaPage.js';
@@ -11,9 +12,6 @@ test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
   const feesTemplateQaPage = new FeesTemplateQaPage(page);
 
   await loginQaPage.login('9699342811+2', 'Ritesh@123');
-  await page.waitForTimeout(1000); 
-
-
   await page.waitForTimeout(1000); 
 
   const uniqueId = `${Date.now()}`;
@@ -51,7 +49,17 @@ test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
   await page.waitForTimeout(500);
   await feesDetailsQaPage.addInstallment('30', currentDate);
   await page.waitForTimeout(1000); 
-  await feesDetailsQaPage.processPayment('Sujit', '0-0');
+  
+  // Generate unique transaction ID for online payment
+  const uniqueTransactionId = Math.floor(10000000 + Math.random() * 90000000).toString();
+  
+  // Process payment - automatically uses cash if available, otherwise online
+  await feesDetailsQaPage.processPayment('Sujit', '0-0', {
+    transactionId: uniqueTransactionId,
+    date: currentDate,
+    provider: 'dere-hdfc'
+  });
+  
   await page.waitForTimeout(1000); 
   await feesDetailsQaPage.clickBack();
   await page.waitForTimeout(1000); 

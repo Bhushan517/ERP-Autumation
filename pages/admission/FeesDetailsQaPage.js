@@ -1,3 +1,4 @@
+// FeesDetailsQaPage.js
 class FeesDetailsQaPage {
   constructor(page) {
     this.page = page;
@@ -61,13 +62,51 @@ class FeesDetailsQaPage {
     await this.saveInstallments();
   }
 
-  async processPayment(templateName, index = '0-0') {
+  /**
+   * Process payment - automatically handles cash or online payment based on availability
+   * @param {string} templateName - Template name to click
+   * @param {string} index - Payment button index (default: '0-0')
+   * @param {Object} onlinePaymentData - Data for online payment (transactionId, date, provider)
+   */
+  async processPayment(templateName, index = '0-0', onlinePaymentData = {}) {
     await this.clickTemplate(templateName);
     await this.clickInstallment();
     await this.clickGetPayment(index);
+
+    // Wait for payment modal to appear
+    await this.page.getByText('Payment').first().waitFor({ state: 'visible' });
+    await this.page.waitForTimeout(500);
+
+    // Check if cash payment option is available
+    const cashCheckbox = this.page.getByTestId('AI-PAY-method-cash').first();
+    const isCashAvailable = await cashCheckbox.isVisible().catch(() => false);
+
+    if (isCashAvailable) {
+      // Use cash payment
+      console.log('Cash payment option available - using cash');
+      await cashCheckbox.scrollIntoViewIfNeeded();
+      await cashCheckbox.check();
+    } else {
+      // Use online payment
+      console.log('Cash payment not available - using online payment');
+      const onlineCheckbox = this.page.getByTestId('AI-PAY-method-online').first();
+      await onlineCheckbox.scrollIntoViewIfNeeded();
+      await onlineCheckbox.check();
+
+      // Fill online payment details
+      await this.page.getByTestId('AI-PAY-ONLINE-date-picker').click();
+      await this.page.getByRole('button', { name: onlinePaymentData.date, exact: true }).click();
+      
+      await this.page.getByTestId('AI-PAY-ONLINE-transaction-id').click();
+      await this.page.getByTestId('AI-PAY-ONLINE-transaction-id').fill(onlinePaymentData.transactionId);
+      
+      await this.page.getByRole('button', { name: 'Select Provider' }).click();
+      await this.page.getByText(onlinePaymentData.provider).click();
+    }
+
+    // Save payment
     await this.savePayment();
   }
 }
 
 export default FeesDetailsQaPage;
-
