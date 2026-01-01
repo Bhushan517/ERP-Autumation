@@ -37,7 +37,6 @@ class MembershipFeesDetailsPage {
   }
 
   async expandInstallment() {
-    // Click chevron down to expand installment
     const chevron = this.page.locator('.lucide.lucide-chevron-down').first();
     await chevron.waitFor({ state: 'visible', timeout: 5000 });
     await chevron.click();
