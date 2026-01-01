@@ -46,8 +46,10 @@ class AdmissionQaPage {
   async selectDate(day) {
     await this.page.getByTestId('AF-student-dob-input').click();
     await this.page.waitForTimeout(500);
+    // Wait for calendar to be visible and get enabled button only
     const dateField = this.page.getByTestId('AF-student-dob-field');
-    
+    // Use locator with XPath to find enabled button with exact text match
+    // XPath syntax: find button with exact text matching day and not disabled
     const dateButton = dateField.locator(`xpath=.//button[text()='${day}' and not(@disabled)]`).first();
     await dateButton.waitFor({ state: 'visible', timeout: 5000 });
     await dateButton.click();

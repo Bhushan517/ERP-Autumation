@@ -41,7 +41,7 @@ test('Admission QA - Update Admission Details', async ({ page }) => {
   await admissionQaPage.addNote({
     title: uniqueText('note'),
     description: uniqueText('desc'),
-    approver: 'bhushan rahut',
+    approver: 'admin patole',
     dateDay: '1'
   });
 
