@@ -10,9 +10,12 @@ class MembershipFeesDetailsPage {
 
   async searchAndSelectTemplate(templateName) {
     await this.page.getByTestId('H-M-FD-Template-Search-Toggle').click();
-    await this.page.waitForTimeout(500);
-    await this.page.getByText(templateName, { exact: false }).click();
-    await this.page.waitForTimeout(500);
+       await this.page.waitForTimeout(500);
+     await this.page.getByTestId('H-M-FD-Template-Search-Input').fill('bhushan');
+        await this.page.waitForTimeout(500);
+  await this.page.getByTestId('H-M-FD-Template-Option-0').getByText('bhushan raut').click();
+     await this.page.waitForTimeout(500);
+   
   }
 
   async addTemplate() {

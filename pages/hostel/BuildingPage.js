@@ -56,7 +56,7 @@ class BuildingPage {
   async selectIncharge(inchargeName) {
     await this.page.locator('.react-select__input-container').click();
     await this.page.waitForTimeout(500);
-    await this.page.getByRole('option', { name: inchargeName }).click();
+    await this.page.getByRole('option',).first().click();
     await this.page.waitForTimeout(500);
   }
 
