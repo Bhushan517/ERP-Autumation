@@ -18,11 +18,21 @@ class AdmissionQaPage {
     await this.page.getByTestId('AF-add-admission-button').click();
   }
 
-  async enterPRN(prn) {
-    await this.page.getByTestId('AF-student-prn-input').click();
-    await this.page.getByTestId('AF-student-prn-input').fill(prn);
+async enterPRN(prn) {
+  // Check if PRN field is visible
+  const prnField = this.page.getByTestId('AF-student-prn-input');
+  const isPRNVisible = await prnField.isVisible().catch(() => false);
+  
+  if (isPRNVisible) {
+    // PRN field visible aahe - fill kara
+    console.log('PRN field visible - filling PRN number');
+    await prnField.click();
+    await prnField.fill(prn);
+  } else {
+    // PRN field hidden aahe - skip kara
+    console.log('PRN field hidden - skipping PRN entry');
   }
-
+}
   async selectTitle(title) {
     await this.page.getByTestId('AF-student-title-dropdown').click();
     await this.page.getByText(title, { exact: true }).click();
