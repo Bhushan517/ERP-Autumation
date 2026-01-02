@@ -26,10 +26,10 @@ class FeesDetailsQaPage {
     await this.page.getByTestId('AI-FD-installment-amount-input').fill(amount);
   }
 
-  async selectInstallmentDate(day) {
-    await this.page.getByTestId('AI-FD-installment-dueon').click();
-    await this.page.getByRole('button', { name: day }).first().click();
-  }
+ async selectInstallmentDate(day) {
+  await this.page.getByTestId('AI-FD-installment-dueon').click();
+  await this.page.getByRole('button', { name: day, exact: true }).click();
+}
 
   async saveInstallments() {
     await this.page.getByTestId('AI-FD-save-installments').click();
