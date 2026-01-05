@@ -67,7 +67,7 @@ test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
   await feesTemplateQaPage.createTemplate({
     name: `ram-${uniqueId}`,
     componentName: 'am',
-    amount: '3000000'
+    amount: '48000'
   });
   await page.waitForTimeout(1000);
 });
