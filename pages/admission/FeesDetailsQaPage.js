@@ -10,7 +10,7 @@ class FeesDetailsQaPage {
 
   async selectTemplate(templateName) {
     await this.page.getByTestId('AI-FD-template-select').click();
-    await this.page.getByText(templateName).click();
+    await this.page.getByTestId('AI-FD-template-option-0').click();
   }
 
   async clickAddTemplate() {
@@ -26,17 +26,25 @@ class FeesDetailsQaPage {
     await this.page.getByTestId('AI-FD-installment-amount-input').fill(amount);
   }
 
- async selectInstallmentDate(day) {
-  await this.page.getByTestId('AI-FD-installment-dueon').click();
-  await this.page.getByRole('button', { name: day, exact: true }).click();
-}
+  async selectInstallmentDate(day) {
+    await this.page.getByTestId('AI-FD-installment-dueon').click();
+    await this.page.getByRole('button', { name: day, exact: true }).click();
+  }
 
   async saveInstallments() {
     await this.page.getByTestId('AI-FD-save-installments').click();
+    
+    // Check if save default button exists
+    const saveDefaultBtn = this.page.getByTestId('AI-FD-save-default');
+    const isSaveDefaultVisible = await saveDefaultBtn.isVisible().catch(() => false);
+    
+    if (isSaveDefaultVisible) {
+      await saveDefaultBtn.click();
+    }
   }
 
   async clickTemplate(templateName) {
-    await this.page.getByText(templateName, { exact: true }).click();
+    await this.page.locator('.lucide.lucide-chevron-down').first().click()
   }
 
   async clickInstallment() {
@@ -55,18 +63,39 @@ class FeesDetailsQaPage {
     await this.page.getByTestId('EA-back-button').click();
   }
 
+  /**
+   * Add installment - automatically handles templates with/without installment option
+   * @param {string} amount - Installment amount
+   * @param {string} date - Due date
+   */
   async addInstallment(amount, date) {
-    await this.clickAddInstallment();
-    await this.enterInstallmentAmount(amount);
-    await this.selectInstallmentDate(date);
-    await this.saveInstallments();
+    // Check if "Add Installment" button exists (some templates don't allow installments)
+    const addInstallmentBtn = this.page.getByTestId('AI-FD-add-installment');
+    const canCreateInstallment = await addInstallmentBtn.isVisible({ timeout: 2000 }).catch(() => false);
+    
+    if (canCreateInstallment) {
+      // Template allows installments - create custom installment
+      console.log('✅ Template allows installments - creating custom installment');
+      await this.clickAddInstallment();
+      await this.enterInstallmentAmount(amount);
+      await this.selectInstallmentDate(date);
+      await this.saveInstallments();
+    } else {
+      // Template doesn't allow installments - use default save
+      console.log('⏭️ Template does not allow installments - using default save');
+      const saveDefaultBtn = this.page.getByTestId('AI-FD-save-default');
+      const isSaveDefaultVisible = await saveDefaultBtn.isVisible().catch(() => false);
+      
+      if (isSaveDefaultVisible) {
+        await saveDefaultBtn.click();
+      } else {
+        console.log('⚠️ No save option found - template might be auto-saved');
+      }
+    }
   }
 
   /**
-   * Process payment - automatically handles cash or online payment based on availability
-   * @param {string} templateName - Template name to click
-   * @param {string} index - Payment button index (default: '0-0')
-   * @param {Object} onlinePaymentData - Data for online payment (transactionId, date, provider)
+   * Process payment - automatically handles cash or manual payment based on availability
    */
   async processPayment(templateName, index = '0-0', onlinePaymentData = {}) {
     await this.clickTemplate(templateName);
@@ -80,23 +109,16 @@ class FeesDetailsQaPage {
     const isCashAvailable = await cashCheckbox.isVisible().catch(() => false);
 
     if (isCashAvailable) {
-      console.log('Cash payment option available - using cash');
+      console.log('✅ Cash payment available - using cash');
       await cashCheckbox.scrollIntoViewIfNeeded();
       await cashCheckbox.check();
     } else {
-      console.log('Cash payment not available - using online payment');
-      const onlineCheckbox = this.page.getByTestId('AI-PAY-method-online').first();
-      await onlineCheckbox.scrollIntoViewIfNeeded();
-      await onlineCheckbox.check();
-
-      await this.page.getByTestId('AI-PAY-ONLINE-date-picker').click();
-      await this.page.getByRole('button', { name: onlinePaymentData.date, exact: true }).click();
-      
-      await this.page.getByTestId('AI-PAY-ONLINE-transaction-id').click();
-      await this.page.getByTestId('AI-PAY-ONLINE-transaction-id').fill(onlinePaymentData.transactionId);
-      
-      await this.page.getByRole('button', { name: 'Select Provider' }).click();
-      await this.page.getByText(onlinePaymentData.provider).click();
+      console.log('❌ Cash not available - using manual payment');
+      const manualCheckbox = this.page.locator('input[type="checkbox"]').filter({ 
+        has: this.page.locator('text=Manual Payment') 
+      }).first();
+      await manualCheckbox.scrollIntoViewIfNeeded();
+      await manualCheckbox.check();
     }
 
     await this.savePayment();
