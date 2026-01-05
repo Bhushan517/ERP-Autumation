@@ -1,21 +1,18 @@
 import { test, expect } from '@playwright/test';
 
 test('Create 99 Users with Same Data', async ({ page }) => {
-  test.setTimeout(600000); // 10 minutes timeout (600 seconds)
+  test.setTimeout(600000); 
 
-  // Login once
   await page.goto('https://qa.d3kq8oy4csoq2n.amplifyapp.com/');
   await page.getByTestId('SI-username-input-password').fill('9699342811+2');
   await page.getByTestId('SI-password-input-password').fill('Ritesh@123');
   await page.getByTestId('SI-password-input-password').press('Enter');
   await page.waitForTimeout(2000);
 
-  // Navigate to Users section
   await page.getByTestId('menu-item-user-management').click();
   await page.getByTestId('submenu-item-users').click();
   await page.waitForTimeout(1000);
 
-  // Loop 99 times - same code repeat
   for (let i = 1; i <= 99; i++) {
     console.log(`Creating user ${i} of 99...`);
 

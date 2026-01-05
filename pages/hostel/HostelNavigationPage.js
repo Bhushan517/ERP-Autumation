@@ -4,7 +4,6 @@ class HostelNavigationPage {
   }
 
   async ensureHostelMenuOpen() {
-    // Just ensure submenu is visible (don't toggle)
     const submenu = this.page.getByTestId('submenu-item-premises');
     const isVisible = await submenu.isVisible().catch(() => false);
     

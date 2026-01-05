@@ -73,27 +73,22 @@ class FeesDetailsQaPage {
     await this.clickInstallment();
     await this.clickGetPayment(index);
 
-    // Wait for payment modal to appear
     await this.page.getByText('Payment').first().waitFor({ state: 'visible' });
     await this.page.waitForTimeout(500);
 
-    // Check if cash payment option is available
     const cashCheckbox = this.page.getByTestId('AI-PAY-method-cash').first();
     const isCashAvailable = await cashCheckbox.isVisible().catch(() => false);
 
     if (isCashAvailable) {
-      // Use cash payment
       console.log('Cash payment option available - using cash');
       await cashCheckbox.scrollIntoViewIfNeeded();
       await cashCheckbox.check();
     } else {
-      // Use online payment
       console.log('Cash payment not available - using online payment');
       const onlineCheckbox = this.page.getByTestId('AI-PAY-method-online').first();
       await onlineCheckbox.scrollIntoViewIfNeeded();
       await onlineCheckbox.check();
 
-      // Fill online payment details
       await this.page.getByTestId('AI-PAY-ONLINE-date-picker').click();
       await this.page.getByRole('button', { name: onlinePaymentData.date, exact: true }).click();
       
@@ -104,7 +99,6 @@ class FeesDetailsQaPage {
       await this.page.getByText(onlinePaymentData.provider).click();
     }
 
-    // Save payment
     await this.savePayment();
   }
 }

@@ -6,7 +6,7 @@ class AdmissionQaPage {
   }
 
 
-   async clickAdmissionAndFees() {
+  async clickAdmissionAndFees() {
     await this.page.getByTestId('menu-item-admission-&-fees').click();
   }
 
@@ -18,21 +18,19 @@ class AdmissionQaPage {
     await this.page.getByTestId('AF-add-admission-button').click();
   }
 
-async enterPRN(prn) {
-  // Check if PRN field is visible
-  const prnField = this.page.getByTestId('AF-student-prn-input');
-  const isPRNVisible = await prnField.isVisible().catch(() => false);
-  
-  if (isPRNVisible) {
-    // PRN field visible aahe - fill kara
-    console.log('PRN field visible - filling PRN number');
-    await prnField.click();
-    await prnField.fill(prn);
-  } else {
-    // PRN field hidden aahe - skip kara
-    console.log('PRN field hidden - skipping PRN entry');
+  async enterPRN(prn) {
+    const prnField = this.page.getByTestId('AF-student-prn-input');
+    const isPRNVisible = await prnField.isVisible().catch(() => false);
+
+    if (isPRNVisible) {
+      console.log('PRN field visible - filling PRN number');
+      await prnField.click();
+      await prnField.fill(prn);
+    } else {
+
+      console.log('PRN field hidden - skipping PRN entry');
+    }
   }
-}
   async selectTitle(title) {
     await this.page.getByTestId('AF-student-title-dropdown').click();
     await this.page.getByText(title, { exact: true }).click();
@@ -56,10 +54,7 @@ async enterPRN(prn) {
   async selectDate(day) {
     await this.page.getByTestId('AF-student-dob-input').click();
     await this.page.waitForTimeout(500);
-    // Wait for calendar to be visible and get enabled button only
     const dateField = this.page.getByTestId('AF-student-dob-field');
-    // Use locator with XPath to find enabled button with exact text match
-    // XPath syntax: find button with exact text matching day and not disabled
     const dateButton = dateField.locator(`xpath=.//button[text()='${day}' and not(@disabled)]`).first();
     await dateButton.waitFor({ state: 'visible', timeout: 5000 });
     await dateButton.click();
@@ -216,8 +211,8 @@ async enterPRN(prn) {
   }
 
   async createAdmission(admissionData) {
-     await this.clickAdmissionAndFees();
-     await this.page.waitForTimeout(500);
+    await this.clickAdmissionAndFees();
+    await this.page.waitForTimeout(500);
     await this.clickAdmissions();
     await this.clickAddAdmissionButton();
     await this.page.waitForTimeout(500);

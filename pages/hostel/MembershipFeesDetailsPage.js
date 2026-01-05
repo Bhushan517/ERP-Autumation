@@ -43,7 +43,7 @@ class MembershipFeesDetailsPage {
     const chevron = this.page.locator('.lucide.lucide-chevron-down').first();
     await chevron.waitFor({ state: 'visible', timeout: 5000 });
     await chevron.click();
-    await this.page.waitForTimeout(1000); // Increased wait for content to expand
+    await this.page.waitForTimeout(1000); 
   }
 
   async getPayment(installmentIndex = 0, paymentIndex = 0) {
