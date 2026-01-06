@@ -253,7 +253,7 @@ class AdmissionQaPage {
   async changeStatusToCanceled() {
     await this.page.getByRole('button', { name: 'Confirmed' }).click();
     await this.page.waitForTimeout(500);
-    await this.page.getByText('Canceled').click();
+    await this.page.getByTestId('AF-student-status-options').getByText('Canceled').click();
     await this.page.waitForTimeout(500);
   }
 
