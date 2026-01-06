@@ -19,8 +19,8 @@ test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
   const uniqueEmail = `ram${uniqueId}@gmail.com`;
   const uniquePhone = `6${Math.floor(100000000 + Math.random() * 900000000)}`;
   const currentDate = new Date().getDate().toString();
-  const firstName = 'ram';
-  const lastName = 'sham';
+  const firstName = 'automation ';
+  const lastName = 'testing';
   const studentName = `Mr. ${firstName.charAt(0).toUpperCase() + firstName.slice(1)} ${lastName.charAt(0).toUpperCase() + lastName.slice(1)}`;
 
   await admissionQaPage.createAdmission({
@@ -65,7 +65,7 @@ test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
   await feesTemplateQaPage.clickFeesTemplate();
   await page.waitForTimeout(1000);
   await feesTemplateQaPage.createTemplate({
-    name: `ram-${uniqueId}`,
+    name: `automation-${uniqueId}`,
     componentName: 'am',
     amount: '48000'
   });

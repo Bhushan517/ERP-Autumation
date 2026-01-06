@@ -19,7 +19,7 @@ test('Admission QA - Update Admission Details', async ({ page }) => {
 
   await admissionQaPage.navigateToAdmissions();
 
-  await admissionQaPage.clickStudentName('Mr. Ram Sham');
+  await admissionQaPage.clickStudentName('Mr. Automation Testing');
   await page.waitForTimeout(1500);
 
   await admissionQaPage.updatePersonalDetails({

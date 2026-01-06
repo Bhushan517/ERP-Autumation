@@ -9,11 +9,11 @@ import HostelNavigationPage from '../pages/hostel/HostelNavigationPage.js';
 
 test('Hostel - Create building/floor/room/template/member with unique data', async ({ page }) => {
   const uniqueId = Date.now();
-  const buildingName = `rox building ${uniqueId}`;
-  const floorName = `rox floor ${uniqueId}`;
-  const roomName = `rox room ${uniqueId}`;
-  const templateName = `rox template ${uniqueId}`;
-  const componentName = `rozz ${uniqueId}`;
+  const buildingName = `automation building ${uniqueId}`;
+  const floorName = `automation floor ${uniqueId}`;
+  const roomName = `automation room ${uniqueId}`;
+  const templateName = `automation template ${uniqueId}`;
+  const componentName = `automation ${uniqueId}`;
   const location = 'Baap company';
 
   const loginQaPage = new LoginQaPage(page);
