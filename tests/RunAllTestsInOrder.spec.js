@@ -56,4 +56,12 @@ test.describe.serial('Run All Tests In Order', () => {
         });
     });
 
+    test('7. Run UserManagement.spec', async () => {
+        console.log('\n🔄 Running: UserManagement.spec.js\n');
+        execSync('npx playwright test tests/UserManagement.spec.js --headed', {
+            stdio: 'inherit',
+            cwd: process.cwd()
+        });
+    });
+
 });

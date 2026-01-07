@@ -7,7 +7,8 @@ const testFiles = [
     'tests/AdmissionQaZDelete.spec.js',
     'tests/AdmissionFeesTamplateDelete.spec.js',
     'tests/HostelModule.spec.js',
-    'tests/HostelMembershipDetails.spec.js'
+    'tests/HostelMembershipDetails.spec.js',
+    'tests/UserManagement.spec.js'
 ];
 
 console.log('\n🚀 Starting Sequential Test Execution...\n');
@@ -31,7 +32,7 @@ testFiles.forEach((file, index) => {
     } catch (error) {
         console.log(`❌ FAILED: ${file}\n`);
         totalFailed++;
-  
+
     }
 });
 
