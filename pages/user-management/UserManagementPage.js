@@ -137,6 +137,97 @@ class UserManagementPage {
         await this.navigateToTab('Official Details');
         await this.navigateToTab('Personal Details');
     }
+
+    // --- New Methods for Edit, Filter, Delete ---
+
+    async selectManager(managerName) {
+        await this.page.getByTestId('UM-AE-Manager').click();
+        await this.page.waitForTimeout(800);
+        await this.page.getByTestId('UM-AE-Manager').fill(managerName);
+        await this.page.waitForTimeout(1000);
+        await this.page.locator('div[role="listbox"], .absolute, .z-50').getByText(managerName, { exact: false }).first().click();
+    }
+
+    async clickEditUser(rowIndex = 1) {
+        await this.page.getByRole('row').nth(rowIndex).getByTestId('UM-emp-list-edit-btn').click();
+        await this.page.waitForTimeout(1500);
+    }
+
+    async clickUpdateUser() {
+        await this.page.getByRole('button', { name: 'Update' }).click();
+        await this.page.waitForTimeout(2000);
+    }
+
+    async openFilter() {
+        await this.page.getByTestId('UM-emp-list-filter-btn').click();
+        await this.page.waitForTimeout(800);
+    }
+
+    async applyFilter(filterData) {
+        // filterData = { manager, department, location, status }
+        if (filterData.manager) {
+            await this.page.getByTestId('UM-user-filter-manager-search').click();
+            await this.page.getByTestId('UM-user-filter-manager-search').fill(filterData.manager);
+            await this.page.waitForTimeout(1000);
+            await this.page.locator('div[role="listbox"], .absolute, .z-50').getByText(filterData.manager, { exact: false }).first().click();
+            await this.page.waitForTimeout(800);
+        }
+        if (filterData.department) {
+            await this.page.getByTestId('UM-user-filter-dept-search').click();
+            await this.page.waitForTimeout(800);
+            await this.page.getByText(filterData.department, { exact: true }).last().click();
+            await this.page.waitForTimeout(800);
+        }
+        if (filterData.location) {
+            await this.page.getByTestId('UM-user-filter-loc-search').click();
+            await this.page.waitForTimeout(800);
+            await this.page.getByText(filterData.location, { exact: true }).click();
+            await this.page.waitForTimeout(800);
+        }
+        if (filterData.status) {
+            await this.page.getByTestId('UM-user-filter-status').click();
+            await this.page.waitForTimeout(800);
+            await this.page.getByText(filterData.status, { exact: true }).click();
+            await this.page.waitForTimeout(1000);
+        }
+
+        await this.page.getByTestId('UM-user-filter-apply-btn').click();
+        await this.page.waitForTimeout(2000);
+    }
+
+    async resetFilterButtons() {
+        await this.page.getByTestId('UM-user-filter-reset-btn').click();
+        await this.page.waitForTimeout(2000);
+        await this.page.getByTestId('UM-user-filter-apply-btn').click();
+        await this.page.waitForTimeout(2000);
+    }
+
+    async deleteUser(rowIndex = 1) {
+        await this.page.getByRole('row').nth(rowIndex).getByTestId('UM-emp-list-delete-btn').click();
+        await this.page.waitForTimeout(1000);
+        await this.page.getByTestId('UM-emp-list-delete-popup-confirm').click();
+        await this.page.waitForTimeout(2000);
+    }
+
+    async selectDepartment(departmentName) {
+        await this.page.getByTestId('UM-AE-Search Department').click();
+        await this.page.waitForTimeout(800);
+        await this.page.getByText(departmentName, { exact: true }).last().click();
+    }
+
+    async selectJoiningDate(day) {
+        await this.page.getByTestId('UM-AE-Joining Date').click();
+        await this.page.waitForTimeout(800);
+        // Using robust selector scoped to calendar
+        await this.page.locator('button.h-5.w-5').filter({ hasText: new RegExp(`^${day}$`) }).click();
+    }
+
+    async updateBasicInfo(firstName, lastName) {
+        await this.page.getByTestId('UM-AE-First Name').fill(firstName);
+        await this.page.waitForTimeout(300);
+        await this.page.getByTestId('UM-AE-Last Name').fill(lastName);
+        await this.page.waitForTimeout(500);
+    }
 }
 
 export default UserManagementPage;

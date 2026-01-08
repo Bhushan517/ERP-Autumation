@@ -8,7 +8,9 @@ const testFiles = [
     'tests/AdmissionFeesTamplateDelete.spec.js',
     'tests/HostelModule.spec.js',
     'tests/HostelMembershipDetails.spec.js',
-    'tests/UserManagement.spec.js'
+
+    'tests/UserManagement.spec.js',
+    'tests/UserEditAndFilterDelete.spec.js'
 ];
 
 console.log('\n🚀 Starting Sequential Test Execution...\n');

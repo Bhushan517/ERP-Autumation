@@ -64,4 +64,12 @@ test.describe.serial('Run All Tests In Order', () => {
         });
     });
 
+    test('8. Run UserEditAndFilterDelete.spec', async () => {
+        console.log('\n🔄 Running: UserEditAndFilterDelete.spec.js\n');
+        execSync('npx playwright test tests/UserEditAndFilterDelete.spec.js --headed', {
+            stdio: 'inherit',
+            cwd: process.cwd()
+        });
+    });
+
 });
