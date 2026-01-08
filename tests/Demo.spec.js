@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('User Management - Search, Edit, Delete, Filter', async ({ page }) => {
-  test.setTimeout(120000); 
+  test.setTimeout(120000);
 
   // Login
   await page.goto('https://qa.d3kq8oy4csoq2n.amplifyapp.com/');
@@ -62,8 +62,8 @@ test('User Management - Search, Edit, Delete, Filter', async ({ page }) => {
 
   await page.getByTestId('UM-user-filter-manager-search').click();
   await page.getByTestId('UM-user-filter-manager-search').fill('bhushan raut');
-  await page.waitForTimeout(800);
-  await page.getByText('Bhushan Raut', { exact: true }).nth(1).click();
+  await page.waitForTimeout(1000); 
+  await page.locator('div[role="listbox"], .absolute, .z-50').getByText('Bhushan Raut', { exact: false }).first().click();
   await page.waitForTimeout(800);
 
   await page.getByTestId('UM-user-filter-dept-search').click();
