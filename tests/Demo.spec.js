@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('User Management - Search, Edit, Delete, Filter', async ({ page }) => {
-  test.setTimeout(120000); // 2 minutes timeout
+  test.setTimeout(120000); 
 
   // Login
   await page.goto('https://qa.d3kq8oy4csoq2n.amplifyapp.com/');
@@ -17,8 +17,8 @@ test('User Management - Search, Edit, Delete, Filter', async ({ page }) => {
   await page.waitForTimeout(1500);
 
   // Search User
-  await page.getByTestId('UM-emp-list-search').fill('bhushan');
-  await page.waitForTimeout(1000);
+  // await page.getByTestId('UM-emp-list-search').fill('bhushan');
+  // await page.waitForTimeout(1000);
 
   await page.getByRole('row').nth(1).getByTestId('UM-emp-list-edit-btn').click();
   await page.waitForTimeout(1500);
@@ -33,24 +33,18 @@ test('User Management - Search, Edit, Delete, Filter', async ({ page }) => {
   await page.getByTestId('UM-AE-Manager').click();
   await page.waitForTimeout(800);
 
-  await page.locator('.absolute > div:nth-child(2)').click();
+  await page.getByTestId('UM-AE-Manager').fill('bhushan raut');
+  await page.waitForTimeout(1000);
+  await page.locator('div[role="listbox"], .absolute, .z-50').getByText('bhushan raut', { exact: false }).first().click();
+
   await page.waitForTimeout(800);
-
-  // await page.getByTestId('UM-AE-Search Location').click();
-  // await page.waitForTimeout(800);
-
-  // await page.getByText('Baap company', { exact: true }).click();
-  // await page.waitForTimeout(800);
 
   await page.getByTestId('UM-AE-Search Department').click();
   await page.waitForTimeout(800);
 
-  // Select QA from dropdown - using last() to get the dropdown option, not table text
   await page.getByText('QA', { exact: true }).last().click();
   await page.waitForTimeout(800);
 
-
-  // Joining Date
   await page.getByTestId('UM-AE-Joining Date').click();
   await page.waitForTimeout(800);
   await page.getByRole('button', { name: '2' }).nth(3).click();
@@ -59,28 +53,21 @@ test('User Management - Search, Edit, Delete, Filter', async ({ page }) => {
   await page.getByTestId('UM-AE-Geofencing').check();
   await page.waitForTimeout(500);
 
-  // Update
+
   await page.getByRole('button', { name: 'Update' }).click();
   await page.waitForTimeout(2000);
-
-  // Delete
-  await page.getByRole('row').nth(1).getByTestId('UM-emp-list-delete-btn').click();
-  await page.waitForTimeout(1000);
-  await page.getByTestId('UM-emp-list-delete-popup-confirm').click();
-  await page.waitForTimeout(2000);
-
 
   await page.getByTestId('UM-emp-list-filter-btn').click();
   await page.waitForTimeout(800);
 
   await page.getByTestId('UM-user-filter-manager-search').click();
+  await page.getByTestId('UM-user-filter-manager-search').fill('bhushan raut');
   await page.waitForTimeout(800);
-  await page.getByText('Bhushan Raut', { exact: true }).first().click();
+  await page.getByText('Bhushan Raut', { exact: true }).nth(1).click();
   await page.waitForTimeout(800);
 
   await page.getByTestId('UM-user-filter-dept-search').click();
   await page.waitForTimeout(800);
-  // Select QA from filter dropdown - using last() to avoid table text
   await page.getByText('QA', { exact: true }).last().click();
   await page.waitForTimeout(800);
 
@@ -98,6 +85,24 @@ test('User Management - Search, Edit, Delete, Filter', async ({ page }) => {
   await page.waitForTimeout(2000);
 
 
+  await page.getByTestId('UM-emp-list-filter-btn').click();
+  await page.waitForTimeout(800);
+
+
+
+
+  await page.getByTestId('UM-user-filter-reset-btn').click();
+  await page.waitForTimeout(2000);
+
+  await page.getByTestId('UM-user-filter-apply-btn').click();
+  await page.waitForTimeout(2000);
+
+
+
+  await page.getByRole('row').nth(1).getByTestId('UM-emp-list-delete-btn').click();
+  await page.waitForTimeout(1000);
+  await page.getByTestId('UM-emp-list-delete-popup-confirm').click();
+  await page.waitForTimeout(2000);
 
   console.log('✅ Test completed!');
 });
