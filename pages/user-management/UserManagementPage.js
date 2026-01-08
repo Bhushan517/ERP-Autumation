@@ -47,7 +47,7 @@ class UserManagementPage {
         // Select Joining Date
         await this.page.getByTestId('UM-AE-Joining Date').click();
         await this.page.waitForTimeout(500);
-        await this.page.getByRole('button', { name: currentDate, exact: true }).click();
+        await this.page.locator('button.h-5.w-5').filter({ hasText: new RegExp(`^${currentDate}$`) }).click();
     }
 
     // Fill Emergency Contact
