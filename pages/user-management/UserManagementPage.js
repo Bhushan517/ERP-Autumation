@@ -228,6 +228,108 @@ class UserManagementPage {
         await this.page.getByTestId('UM-AE-Last Name').fill(lastName);
         await this.page.waitForTimeout(500);
     }
+
+    // --- Role Management Methods ---
+
+    async searchRole(roleName) {
+        await this.page.getByTestId('UM-role-list-search').clear();
+        await this.page.waitForTimeout(500);
+        await this.page.getByTestId('UM-role-list-search').fill(roleName);
+        await this.page.waitForTimeout(2000); // Increased wait for search results
+    }
+
+    async clearRoleSearch() {
+        await this.page.getByTestId('UM-role-list-search').clear();
+        await this.page.waitForTimeout(500);
+    }
+
+    async checkRoleExists(roleName) {
+        return await this.page.getByRole('row').filter({ hasText: roleName })
+            .isVisible({ timeout: 5000 }).catch(() => false);
+    }
+
+    async clickAddRole() {
+        await this.page.getByTestId('UM-role-list-add-btn').click();
+        await this.page.waitForTimeout(1000);
+    }
+
+    async fillRoleDetails(name, code, desc) {
+        await this.page.getByTestId('UM-add-roles-name').fill(name);
+        await this.page.waitForTimeout(500);
+        await this.page.getByTestId('UM-add-roles-code').fill(code);
+        await this.page.waitForTimeout(500);
+        await this.page.getByTestId('UM-add-roles-desc').fill(desc);
+        await this.page.waitForTimeout(500);
+        await this.page.getByTestId('UM-add-roles-is-system').check();
+        await this.page.waitForTimeout(500);
+    }
+
+    async saveRole() {
+        await this.page.getByTestId('UM-add-roles-save-btn').click();
+        await this.page.waitForTimeout(2000);
+    }
+
+    async managePermissions(roleName) {
+        // Use filter to find the row containing the exact role name
+        // Changed to first() as search result should ideally be unique/top
+        const roleRow = this.page.getByRole('row').filter({ hasText: roleName }).first();
+        await roleRow.waitFor({ state: 'visible', timeout: 10000 });
+
+        await roleRow.getByTestId('UM-role-list-manage-permissions-btn').click();
+        await this.page.waitForTimeout(1500);
+    }
+
+    async changePermissions() {
+        await this.page.getByTestId('UM-sys-admin-change-perm-btn').click();
+        await this.page.waitForTimeout(1000);
+    }
+
+    async applyPermission(moduleName, permName) {
+        await this.page.getByTestId('UM-apply-perm-module-search').click();
+        await this.page.waitForTimeout(500);
+        // Using nth(2) as per original test, can be improved later
+        await this.page.getByText(moduleName).nth(2).click();
+        await this.page.waitForTimeout(800);
+
+        await this.page.getByTestId('UM-apply-perm-perm-search').click();
+        await this.page.waitForTimeout(500);
+        await this.page.getByText(permName).click();
+        await this.page.waitForTimeout(800);
+
+        await this.page.getByTestId('UM-apply-perm-action-search').click();
+        await this.page.waitForTimeout(500);
+        // Using specific ID from original test, could be parameterized
+        await this.page.getByTestId('UM-apply-perm-action-7504e346-2575-467a-be35-63d6045dd5d4').check();
+        await this.page.waitForTimeout(500);
+
+        await this.page.getByTestId('UM-apply-perm-submit-btn').click();
+        await this.page.waitForTimeout(2000);
+    }
+
+    async editAndDeletePermission() {
+        await this.page.getByTestId('UM-sys-admin-edit-btn').click();
+        await this.page.waitForTimeout(1000);
+        // Edit click
+        await this.page.locator('.text-\\[var\\(--icon-color\\)\\]').click();
+        await this.page.waitForTimeout(800);
+
+        // Delete
+        await this.page.getByTestId('UM-sys-admin-delete-btn').click();
+        await this.page.waitForTimeout(1000);
+        await this.page.getByTestId('UM-sys-admin-delete-perm-popup-confirm').click();
+        await this.page.waitForTimeout(2000);
+    }
+
+    async closeRolePanel() {
+        await this.page.locator('.cursor-pointer > path').first().click({ force: true });
+        await this.page.waitForTimeout(1000);
+
+        const closeButton = this.page.locator('.lucide.lucide-x').first();
+        if (await closeButton.isVisible().catch(() => false)) {
+            await closeButton.click({ force: true });
+            await this.page.waitForTimeout(500);
+        }
+    }
 }
 
 export default UserManagementPage;
