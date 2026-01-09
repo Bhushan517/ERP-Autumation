@@ -80,4 +80,12 @@ test.describe.serial('Run All Tests In Order', () => {
         });
     });
 
+    test('10. Run Certificate.spec', async () => {
+        console.log('\n🔄 Running: Certificate.spec.js\n');
+        execSync('npx playwright test tests/Certificate.spec.js --headed', {
+            stdio: 'inherit',
+            cwd: process.cwd()
+        });
+    });
+
 });
