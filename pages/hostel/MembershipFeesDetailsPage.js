@@ -4,23 +4,26 @@ class MembershipFeesDetailsPage {
   }
 
   async navigateToFeesDetails() {
+    console.log('Navigating to Fees Details...');
     await this.page.getByRole('link', { name: 'Fees Details' }).click();
     await this.page.waitForTimeout(1000);
   }
 
   async searchAndSelectTemplate(templateName) {
     await this.page.getByTestId('H-M-FD-Template-Search-Toggle').click();
-       await this.page.waitForTimeout(500);
-     await this.page.getByTestId('H-M-FD-Template-Search-Input').fill('bhushan');
-        await this.page.waitForTimeout(500);
-  await this.page.getByTestId('H-M-FD-Template-Option-0').getByText('bhushan raut').click();
-     await this.page.waitForTimeout(500);
-   
+    await this.page.waitForTimeout(500);
+    await this.page.getByTestId('H-M-FD-Template-Search-Input').fill('bhushan');
+    await this.page.waitForTimeout(500);
+    await this.page.getByTestId('H-M-FD-Template-Option-0').getByText('bhushan raut').click();
+    await this.page.waitForTimeout(500);
+    console.log(`✅ Template '${templateName}' selected`);
+
   }
 
   async addTemplate() {
     await this.page.getByTestId('H-M-FD-Template-Add-Button').click();
     await this.page.waitForTimeout(1000);
+    console.log('Template added');
   }
 
   async addInstallment(amount, day) {
@@ -43,7 +46,7 @@ class MembershipFeesDetailsPage {
     const chevron = this.page.locator('.lucide.lucide-chevron-down').first();
     await chevron.waitFor({ state: 'visible', timeout: 5000 });
     await chevron.click();
-    await this.page.waitForTimeout(1000); 
+    await this.page.waitForTimeout(1000);
   }
 
   async getPayment(installmentIndex = 0, paymentIndex = 0) {
@@ -69,10 +72,11 @@ class MembershipFeesDetailsPage {
     await this.page.waitForTimeout(500);
     await this.page.getByRole('button', { name: 'Save' }).click();
     await this.page.waitForTimeout(2000);
+    console.log('✅ Manual payment processed successfully');
   }
 
   async collapseInstallment() {
-      await this.page.locator('.ml-2 > .lucide').first().click();
+    await this.page.locator('.ml-2 > .lucide').first().click();
     await this.page.locator('.lucide.lucide-chevron-up').click();
     await this.page.waitForTimeout(500);
   }

@@ -4,12 +4,14 @@ class BuildingPage {
   }
 
   async navigateToBuildings() {
+    console.log('Navigating to Buildings...');
     await this.page.getByTestId('menu-item-hostel').click();
     await this.page.waitForTimeout(500);
     await this.page.getByTestId('submenu-item-premises').click();
     await this.page.waitForTimeout(500);
     await this.page.getByTestId('H-P-B-building-button').click();
     await this.page.waitForTimeout(1000);
+    console.log('✅ Navigated to Buildings');
   }
 
   async clickAddBuilding() {
@@ -46,7 +48,7 @@ class BuildingPage {
     await this.page.getByTestId('H-P-B-Add-Location').click();
 
     //  await page.getByTestId('H-P-B-Add-Location').click();
-  await this.page.getByText(location).nth(1).click();
+    await this.page.getByText(location).nth(1).click();
     await this.page.waitForTimeout(500);
     // Using nth(1) as per original test to avoid strict mode violation
     // await this.page.getByText(location, { exact: true }).first().click();
@@ -66,6 +68,7 @@ class BuildingPage {
   }
 
   async createBuilding(buildingData) {
+    console.log(`Creating building: ${buildingData.name}`);
     await this.enterBuildingName(buildingData.name);
     await this.selectType(buildingData.type);
     await this.enterCapacity(buildingData.capacity);
@@ -73,6 +76,7 @@ class BuildingPage {
     await this.selectLocation(buildingData.location);
     await this.selectIncharge(buildingData.incharge);
     await this.clickSave();
+    console.log(`✅ Building ${buildingData.name} created successfully`);
   }
 }
 

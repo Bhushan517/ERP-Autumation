@@ -4,6 +4,7 @@ class MembershipPage {
   }
 
   async navigateToMemberships() {
+    console.log('Navigating to Memberships...');
     const submenu = this.page.getByTestId('submenu-item-memberships');
     const isVisible = await submenu.isVisible().catch(() => false);
 
@@ -22,6 +23,7 @@ class MembershipPage {
       state: 'visible',
       timeout: 10000
     });
+    console.log('✅ Navigated to Memberships');
   }
 
   async clickAddMember() {
@@ -88,11 +90,13 @@ class MembershipPage {
   }
 
   async createMembership(membershipData) {
+    console.log(`Creating membership for user: ${membershipData.userName}`);
     await this.selectUser(membershipData.userName);
     await this.selectBuilding(membershipData.buildingName);
     await this.selectStartDate(membershipData.startDate);
     await this.selectEndDate(membershipData.endDate);
     await this.clickSave();
+    console.log('✅ Membership created successfully');
   }
 }
 

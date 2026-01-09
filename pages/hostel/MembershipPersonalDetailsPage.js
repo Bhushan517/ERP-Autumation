@@ -4,6 +4,7 @@ class MembershipPersonalDetailsPage {
   }
 
   async navigateToPersonalDetails() {
+    console.log('Navigating to Personal Details...');
     await this.page.getByRole('link', { name: 'Personal Details' }).click();
     await this.page.waitForTimeout(1000);
   }
@@ -63,8 +64,9 @@ class MembershipPersonalDetailsPage {
         state: 'visible',
         timeout: 10000
       });
+      console.log('✅ Personal details saved successfully');
     } catch (e) {
-
+      console.error('Error verifying save completion:', e);
       try {
         await this.page.waitForTimeout(1000);
       } catch (timeoutError) {

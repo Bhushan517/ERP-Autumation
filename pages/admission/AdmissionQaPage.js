@@ -150,6 +150,7 @@ class AdmissionQaPage {
 
     await this.page.getByTestId('AI-PD-save-personal-details-button').click();
     await this.page.waitForTimeout(2000);
+    console.log('✅ Personal details updated successfully');
   }
 
   async updateAcademicInfo(academicData) {
@@ -168,6 +169,7 @@ class AdmissionQaPage {
 
     await this.page.getByTestId('AI-A-save-button').click();
     await this.page.waitForTimeout(1500);
+    console.log('✅ Academic info updated successfully');
   }
 
   async addNote(noteData) {
@@ -197,6 +199,7 @@ class AdmissionQaPage {
 
     await this.page.getByTestId('AI-N-save-btn').click();
     await this.page.waitForTimeout(1500);
+    console.log(`✅ Note added successfully: ${noteData.title}`);
   }
 
   async clickTab(tabName) {
@@ -211,6 +214,7 @@ class AdmissionQaPage {
   }
 
   async createAdmission(admissionData) {
+    console.log(`Starting admission creation for PRN: ${admissionData.prn}...`);
     await this.clickAdmissionAndFees();
     await this.page.waitForTimeout(500);
     await this.clickAdmissions();
@@ -243,6 +247,7 @@ class AdmissionQaPage {
     await this.selectYear(admissionData.year);
     await this.page.waitForTimeout(500);
     await this.clickSave();
+    console.log(`✅ Admission created for PRN: ${admissionData.prn}`);
   }
 
   async clickEditAdmission() {
@@ -255,6 +260,7 @@ class AdmissionQaPage {
     await this.page.waitForTimeout(500);
     await this.page.getByTestId('AF-student-status-options').getByText('Canceled').click();
     await this.page.waitForTimeout(500);
+    console.log('✅ Status changed to Canceled');
   }
 
   async deleteAdmission() {
@@ -262,6 +268,7 @@ class AdmissionQaPage {
     await this.page.waitForTimeout(1000);
     await this.page.getByTestId('AF-Delete-confirm').click();
     await this.page.waitForTimeout(1500);
+    console.log('✅ Admission deleted successfully');
   }
 
   async clickFilterButton() {
@@ -277,11 +284,13 @@ class AdmissionQaPage {
   async clickInviteButton() {
     await this.page.getByTestId('AF-invite-button').click();
     await this.page.waitForTimeout(500);
+    console.log('Invite button clicked');
   }
 
   async closeInviteModal() {
     await this.page.getByTestId('AI-close-button').click();
     await this.page.waitForTimeout(500);
+    console.log('Invite modal closed');
   }
 }
 

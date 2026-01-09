@@ -4,8 +4,10 @@ class FloorPage {
   }
 
   async navigateToFloors() {
+    console.log('Navigating to Floors...');
     await this.page.getByTestId('H-HP-Tab-Link-floor').click();
     await this.page.waitForTimeout(1000);
+    console.log('✅ Navigated to Floors');
   }
 
   async clickAddFloor() {
@@ -38,10 +40,12 @@ class FloorPage {
   }
 
   async createFloor(floorData) {
+    console.log(`Creating floor: ${floorData.name}`);
     await this.enterFloorName(floorData.name);
     await this.enterCapacity(floorData.capacity);
     await this.selectBuilding(floorData.buildingName, floorData.location);
     await this.clickSave();
+    console.log(`✅ Floor ${floorData.name} created successfully`);
   }
 }
 

@@ -19,6 +19,7 @@ class CertificatePage {
     }
 
     async clickRequestCertificate() {
+        console.log('Clicking Request Certificate button...');
         await this.page.getByTestId('C-AC-Request').click();
         await this.page.waitForTimeout(1000);
     }
@@ -36,28 +37,35 @@ class CertificatePage {
     }
 
     async submitRequest() {
+        console.log('Submitting certificate request...');
         await this.page.getByRole('button', { name: 'Request' }).nth(1).click();
         await this.page.waitForTimeout(2000);
+        console.log('✅ Certificate request submitted');
     }
 
     async approveRequest() {
+        console.log('Approving certificate request...');
         await this.page.getByTestId('C-AC-Approve').click();
         await this.page.waitForTimeout(2000);
+        console.log('✅ Certificate request approved');
     }
 
     async rejectRequest() {
+        console.log('Rejecting certificate request...');
         await this.page.getByTestId('C-AC-Reject').click();
         await this.page.waitForTimeout(1000);
         await this.page.getByText('Reject', { exact: true }).click();
         await this.page.waitForTimeout(2000);
+        console.log('✅ Certificate request rejected');
     }
 
     async downloadCertificate(rowName) {
+        console.log(`Downloading certificate for: ${rowName}`);
         const downloadPromise = this.page.waitForEvent('download');
         // Using first() for safety as seen in previous fix
         await this.page.getByRole('row', { name: rowName }).first().getByTestId('C-AC-Download-Certificate').click();
         const download = await downloadPromise;
-        console.log('Downloaded Certificate:', await download.path());
+        console.log('✅ Downloaded Certificate:', await download.path());
         await this.page.waitForTimeout(1500);
     }
 
@@ -70,10 +78,12 @@ class CertificatePage {
     }
 
     async deleteRequest(rowName) {
+        console.log(`Deleting request for: ${rowName}`);
         await this.page.getByRole('row', { name: rowName }).first().getByTestId('C-AC-Delete').click();
         await this.page.waitForTimeout(1000);
         await this.page.getByTestId('common-confirm-confirm').click();
         await this.page.waitForTimeout(2000);
+        console.log('✅ Request deleted successfully');
     }
 
     async filterRequests(status) {

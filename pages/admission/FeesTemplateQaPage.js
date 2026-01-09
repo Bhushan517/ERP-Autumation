@@ -14,10 +14,12 @@ class FeesTemplateQaPage {
   }
 
   async navigateToFeesTemplate() {
+    console.log('Navigating to Fees Template...');
     await this.clickAdmissionAndFees();
     await this.page.waitForTimeout(1000);
     await this.clickFeesTemplate();
     await this.page.waitForTimeout(1500);
+    console.log('✅ Navigated to Fees Template');
   }
 
   async clickAddNew() {
@@ -52,6 +54,7 @@ class FeesTemplateQaPage {
   }
 
   async createTemplate(templateData) {
+    console.log(`Creating template: ${templateData.name}`);
     await this.clickAddNew();
     await this.enterTemplateName(templateData.name);
     await this.clickAddComponent();
@@ -61,6 +64,7 @@ class FeesTemplateQaPage {
     await this.saveTemplate();
     await this.saveComponent();
     await this.saveTemplate();
+    console.log(`✅ Template ${templateData.name} created successfully`);
   }
 
   async editFirstTemplate() {
@@ -74,6 +78,7 @@ class FeesTemplateQaPage {
     await expect(this.page.getByTestId('AF-FT-save-button')).toBeVisible();
     await this.page.getByTestId('AF-FT-save-button').click();
     await this.page.waitForTimeout(1000);
+    console.log('✅ Template updated successfully');
   }
 
   async deleteFirstTemplate() {
@@ -87,6 +92,7 @@ class FeesTemplateQaPage {
     await expect(this.page.getByTestId('AF-FT-Delete-confirm')).toBeVisible();
     await this.page.getByTestId('AF-FT-Delete-confirm').click();
     await this.page.waitForTimeout(1500);
+    console.log('✅ Template deleted successfully');
   }
 
   async closeModal() {

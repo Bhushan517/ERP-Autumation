@@ -5,9 +5,11 @@ class UserManagementPage {
 
     // Navigate to User Management
     async navigateToUsers() {
+        console.log('Navigating to User Management...');
         await this.page.getByTestId('menu-item-user-management').click();
         await this.page.getByTestId('submenu-item-users').click();
         await this.page.waitForTimeout(1000);
+        console.log('✅ Navigated to User Management');
     }
 
     // Click Add Employee button
@@ -106,6 +108,7 @@ class UserManagementPage {
 
     // Complete user creation flow
     async createUser(userData) {
+        console.log(`Starting creation for user: ${userData.firstName} ${userData.lastName}`);
         await this.clickAddEmployee();
         await this.fillPersonalInfo(
             userData.firstName,
@@ -126,6 +129,7 @@ class UserManagementPage {
         await this.selectLocationAndDepartment(userData.location);
         await this.setAttendanceType();
         await this.saveUser();
+        console.log(`✅ User ${userData.firstName} ${userData.lastName} created successfully`);
     }
 
     // View all user detail tabs
@@ -154,8 +158,10 @@ class UserManagementPage {
     }
 
     async clickUpdateUser() {
+        console.log('Updating user...');
         await this.page.getByRole('button', { name: 'Update' }).click();
         await this.page.waitForTimeout(2000);
+        console.log('✅ User updated successfully');
     }
 
     async openFilter() {
@@ -193,6 +199,7 @@ class UserManagementPage {
 
         await this.page.getByTestId('UM-user-filter-apply-btn').click();
         await this.page.waitForTimeout(2000);
+        console.log('✅ Filter applied successfully');
     }
 
     async resetFilterButtons() {
@@ -203,10 +210,12 @@ class UserManagementPage {
     }
 
     async deleteUser(rowIndex = 1) {
+        console.log(`Deleting user at row ${rowIndex}...`);
         await this.page.getByRole('row').nth(rowIndex).getByTestId('UM-emp-list-delete-btn').click();
         await this.page.waitForTimeout(1000);
         await this.page.getByTestId('UM-emp-list-delete-popup-confirm').click();
         await this.page.waitForTimeout(2000);
+        console.log('✅ User deleted successfully');
     }
 
     async selectDepartment(departmentName) {
@@ -235,6 +244,7 @@ class UserManagementPage {
         await this.page.getByTestId('UM-role-list-search').clear();
         await this.page.waitForTimeout(500);
         await this.page.getByTestId('UM-role-list-search').fill(roleName);
+        console.log(`Searching for role: ${roleName}`);
         await this.page.waitForTimeout(2000); // Increased wait for search results
     }
 
@@ -267,6 +277,7 @@ class UserManagementPage {
     async saveRole() {
         await this.page.getByTestId('UM-add-roles-save-btn').click();
         await this.page.waitForTimeout(2000);
+        console.log('✅ Role saved successfully');
     }
 
     async managePermissions(roleName) {
@@ -304,6 +315,7 @@ class UserManagementPage {
 
         await this.page.getByTestId('UM-apply-perm-submit-btn').click();
         await this.page.waitForTimeout(2000);
+        console.log(`✅ Permissions applied for module: ${moduleName}`);
     }
 
     async editAndDeletePermission() {

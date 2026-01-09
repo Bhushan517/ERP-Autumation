@@ -9,6 +9,7 @@ class FeesDetailsQaPage {
   }
 
   async selectTemplate(templateName) {
+    console.log(`Selecting fee template: ${templateName}`);
     await this.page.getByTestId('AI-FD-template-select').click();
     await this.page.getByTestId('AI-FD-template-option-0').click();
   }
@@ -33,11 +34,11 @@ class FeesDetailsQaPage {
 
   async saveInstallments() {
     await this.page.getByTestId('AI-FD-save-installments').click();
-    
+
     // Check if save default button exists
     const saveDefaultBtn = this.page.getByTestId('AI-FD-save-default');
     const isSaveDefaultVisible = await saveDefaultBtn.isVisible().catch(() => false);
-    
+
     if (isSaveDefaultVisible) {
       await saveDefaultBtn.click();
     }
@@ -72,7 +73,7 @@ class FeesDetailsQaPage {
     // Check if "Add Installment" button exists (some templates don't allow installments)
     const addInstallmentBtn = this.page.getByTestId('AI-FD-add-installment');
     const canCreateInstallment = await addInstallmentBtn.isVisible({ timeout: 2000 }).catch(() => false);
-    
+
     if (canCreateInstallment) {
       // Template allows installments - create custom installment
       console.log('✅ Template allows installments - creating custom installment');
@@ -85,7 +86,7 @@ class FeesDetailsQaPage {
       console.log('⏭️ Template does not allow installments - using default save');
       const saveDefaultBtn = this.page.getByTestId('AI-FD-save-default');
       const isSaveDefaultVisible = await saveDefaultBtn.isVisible().catch(() => false);
-      
+
       if (isSaveDefaultVisible) {
         await saveDefaultBtn.click();
       } else {
@@ -102,6 +103,7 @@ class FeesDetailsQaPage {
     await this.clickInstallment();
     await this.clickGetPayment(index);
 
+    console.log('Processing payment...');
     await this.page.getByText('Payment').first().waitFor({ state: 'visible' });
     await this.page.waitForTimeout(500);
 
@@ -114,14 +116,15 @@ class FeesDetailsQaPage {
       await cashCheckbox.check();
     } else {
       console.log('❌ Cash not available - using manual payment');
-      const manualCheckbox = this.page.locator('input[type="checkbox"]').filter({ 
-        has: this.page.locator('text=Manual Payment') 
+      const manualCheckbox = this.page.locator('input[type="checkbox"]').filter({
+        has: this.page.locator('text=Manual Payment')
       }).first();
       await manualCheckbox.scrollIntoViewIfNeeded();
       await manualCheckbox.check();
     }
 
     await this.savePayment();
+    console.log('✅ Payment saved successfully');
   }
 }
 

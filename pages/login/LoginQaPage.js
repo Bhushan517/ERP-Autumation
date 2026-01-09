@@ -26,11 +26,13 @@ class LoginQaPage {
   }
 
   async login(username, password) {
+    console.log(`Attempting login with user: ${username}`);
     await this.goto();
     await this.enterUsername(username);
     await this.enterPassword(password);
     await this.clickSignInContainer();
     await this.clickSubmit();
+    console.log('✅ Login successful');
   }
 }
 

@@ -4,8 +4,10 @@ class RoomPage {
   }
 
   async navigateToRooms() {
+    console.log('Navigating to Rooms...');
     await this.page.getByTestId('H-HP-Tab-Link-room').click();
     await this.page.waitForTimeout(1000);
+    console.log('✅ Navigated to Rooms');
   }
 
   async clickAddRoom() {
@@ -38,10 +40,12 @@ class RoomPage {
   }
 
   async createRoom(roomData) {
+    console.log(`Creating room: ${roomData.name}`);
     await this.enterRoomName(roomData.name);
     await this.selectBuilding(roomData.buildingName, roomData.location);
     await this.enterCapacity(roomData.capacity);
     await this.clickSave();
+    console.log(`✅ Room ${roomData.name} created successfully`);
   }
 }
 
