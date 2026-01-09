@@ -10,7 +10,8 @@ const testFiles = [
     'tests/HostelMembershipDetails.spec.js',
 
     'tests/UserManagement.spec.js',
-    'tests/UserEditAndFilterDelete.spec.js'
+    'tests/UserEditAndFilterDelete.spec.js',
+    'tests/UserRole.spec.js'
 ];
 
 console.log('\n🚀 Starting Sequential Test Execution...\n');

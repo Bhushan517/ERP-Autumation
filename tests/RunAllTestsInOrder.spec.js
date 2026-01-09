@@ -72,4 +72,12 @@ test.describe.serial('Run All Tests In Order', () => {
         });
     });
 
+    test('9. Run UserRole.spec', async () => {
+        console.log('\n🔄 Running: UserRole.spec.js\n');
+        execSync('npx playwright test tests/UserRole.spec.js --headed', {
+            stdio: 'inherit',
+            cwd: process.cwd()
+        });
+    });
+
 });

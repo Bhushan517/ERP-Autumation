@@ -27,6 +27,7 @@ import './HostelModule.spec.js';
 import './HostelMembershipDetails.spec.js';
 import './UserManagement.spec.js';
 import './UserEditAndFilterDelete.spec.js';
+import './UserRole.spec.js';
 
 // This file serves as an orchestrator
 // The actual tests are in the imported files above
