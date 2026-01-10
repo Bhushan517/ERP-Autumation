@@ -39,11 +39,22 @@ class MembershipPage {
     const userInput = this.page.locator('.react-select__input-container').first();
     await userInput.click();
 
-    await this.page.locator('[id^="react-select-"][id$="-option-0"]').waitFor({
-      state: 'visible',
-      timeout: 5000
-    });
-    await this.page.locator('[id^="react-select-"][id$="-option-0"]').click();
+    // Wait for the menu to appear. React-select menu usually has role 'listbox' or we can find options.
+    // User requested to click on the first available member/option.
+    // Using a more generic selector for the option.
+    const firstOption = this.page.locator('[id^="react-select-"][id*="-option-0"]').first();
+
+    // Sometimes the menu takes a moment or the ID is slightly different. 
+    // Trying to wait for any option.
+    try {
+      await firstOption.waitFor({ state: 'visible', timeout: 5000 });
+      await firstOption.click();
+    } catch (e) {
+      console.log('First specific option not found, trying generic role=option');
+      const genericOption = this.page.getByRole('option').first();
+      await genericOption.waitFor({ state: 'visible', timeout: 5000 });
+      await genericOption.click();
+    }
   }
 
   async selectBuilding(buildingName) {
