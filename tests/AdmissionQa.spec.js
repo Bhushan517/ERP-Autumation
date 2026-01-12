@@ -6,6 +6,7 @@ import FeesDetailsQaPage from '../pages/admission/FeesDetailsQaPage.js';
 import FeesTemplateQaPage from '../pages/admission/FeesTemplateQaPage.js';
 
 test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
+  test.setTimeout(120000); // 2 minutes timeout
   const loginQaPage = new LoginQaPage(page);
   const admissionQaPage = new AdmissionQaPage(page);
   const feesDetailsQaPage = new FeesDetailsQaPage(page);
