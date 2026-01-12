@@ -1,80 +1,76 @@
-import { test, expect } from '@playwright/test';
+import { test } from '@playwright/test';
 import LoginQaPage from '../pages/login/LoginQaPage.js';
 import CertificatePage from '../pages/certificate/CertificatePage.js';
 
-test('Certificate Module - Request, Approve, Reject, Download', async ({ page }) => {
-    test.setTimeout(180000); // Increase timeout for demo
+test('Certificate Module - User Requested Flow', async ({ page }) => {
+    test.setTimeout(180000); // 3 mins
 
     const loginQaPage = new LoginQaPage(page);
     const certificatePage = new CertificatePage(page);
 
-    // Login
-    await loginQaPage.goto();
+    // 1. Login
     await loginQaPage.login('9699342811+2', 'Ritesh@123');
-    await page.waitForTimeout(2000);
+    await page.getByTestId('menu-item-certificates').click(); // Initial Nav
 
-    // Navigate to Certificates
-    await certificatePage.navigateToCertificates();
+    // 2. Nav to Approved -> Request New
+    await certificatePage.navigateToApprovedCertificates();
+    await certificatePage.clickRequestCertificate();
+    await certificatePage.fillRequestDetails('ritesh cash payment', 'Cash');
+    await certificatePage.submitRequest();
+
+    // 3. Nav to View Requests -> Approve
+    await certificatePage.navigateToViewCertificateRequests();
+    await certificatePage.approveFirstRequest();
+
+    // 4. Nav to Approved -> Download
+    await certificatePage.navigateToApprovedCertificates();
+    await certificatePage.downloadCertificateAC();
+    await certificatePage.downloadReceiptAC();
+
+    // 5. Request New (Again)
+    await certificatePage.clickRequestCertificate();
+    await certificatePage.fillRequestDetails('ritesh cash payment', 'Cash');
+    await certificatePage.submitRequest();
+
+    // 6. Nav to View Requests -> Reject
+    await certificatePage.navigateToViewCertificateRequests();
+    await certificatePage.rejectFirstRequest();
+
+    // 7. Nav to Approved -> Download Receipt -> Delete
+    // Note: User code navigated to Approved then clicked Download Receipt from 'Delete Download Receipt' cell?
+    // This implies looking for a row that has Delete & Download Receipt.
+    // We will just Download Receipt (First) and Delete (First) as per usual logic.
+    await certificatePage.navigateToApprovedCertificates();
+    await certificatePage.downloadReceiptAC();
+    await certificatePage.deleteRequestAC();
+
+    // 8. Request New (Again)
+    await certificatePage.clickRequestCertificate();
+    await certificatePage.fillRequestDetails('ritesh cash payment', 'Cash');
+    await certificatePage.submitRequest();
+
+    // 9. Nav to View Requests -> Filter Rejected -> Delete
+    await certificatePage.navigateToViewCertificateRequests();
+    await certificatePage.filterByStatus('Rejected');
+    await certificatePage.deleteFirstRequestView();
+
+    // 10. Filter Approved -> Downloads
+    await certificatePage.filterByStatus('Approved');
+    await certificatePage.downloadCertificateView();
+    await certificatePage.downloadReceiptView();
+
+    // 11. Reset Filter -> Delete
+    await certificatePage.resetFilter();
+    await certificatePage.deleteFirstRequestView();
+
+    // 12. Create Request (View Tab)
+    await certificatePage.createRequestFromView('Pratibha Nawale', 'ritesh cash payment');
+
+    // 13. Approve
+    await certificatePage.approveFirstRequest();
+
+    // 14. Nav to Approved (Verify)
     await certificatePage.navigateToApprovedCertificates();
 
-    // --- Scenario 1: Request & Approve ---
-    await certificatePage.clickRequestCertificate();
-
-    await certificatePage.searchAndSelectCertificate('ritesh cash payment');
-    await certificatePage.selectPaymentMode('Cash');
-    await certificatePage.submitRequest();
-
-    await certificatePage.approveRequest();
-
-    const rowNameApprove = '1 Ritesh Cash Payment 09/01/'; // Update date if needed
-
-    // Download Certificate
-    await certificatePage.downloadCertificate(rowNameApprove);
-
-    // Download Receipt
-    await certificatePage.downloadReceipt(rowNameApprove);
-
-    // Delete
-    await certificatePage.deleteRequest(rowNameApprove);
-
-
-    // --- Scenario 2: Request & Reject ---
-    await certificatePage.clickRequestCertificate();
-
-    await certificatePage.searchAndSelectCertificate('ritesh cash payment');
-    await certificatePage.selectPaymentMode('Cash');
-    await certificatePage.submitRequest();
-
-    await certificatePage.rejectRequest();
-
-
-    // --- Scenario 3: Request Again for View Requests ---
-    await certificatePage.clickRequestCertificate();
-
-    await certificatePage.searchAndSelectCertificate('ritesh cash payment');
-    await certificatePage.selectPaymentMode('Cash');
-    await certificatePage.submitRequest();
-
-    await certificatePage.approveRequest();
-
-
-    // --- Verify in View Certificate Requests ---
-    await certificatePage.navigateToViewCertificateRequests();
-
-    // Filter Approved
-    await certificatePage.filterRequests('Approved');
-
-    // Note: Casing seems to differ in View Requests based on previous raw test ('ritesh' vs 'Ritesh')
-    const rowNameView = '1 ritesh cash payment 09/01/';
-
-    await certificatePage.downloadCertificateFromView(rowNameView);
-    await certificatePage.downloadReceiptFromView(rowNameView);
-
-    // Change to Rejected
-    await certificatePage.filterRequests('Rejected');
-
-    // Delete from View Requests
-    await certificatePage.deleteFromViewRequests(rowNameView);
-
-    console.log('✅ Certificate Test Completed');
+    console.log('✅ Certificate User Flow Completed');
 });
