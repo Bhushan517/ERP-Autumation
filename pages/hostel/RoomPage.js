@@ -23,7 +23,8 @@ class RoomPage {
 
   async selectBuilding(buildingName, location) {
     await this.page.locator('.react-select__input-container').first().click();
-    await this.page.waitForTimeout(500);
+    await this.page.keyboard.type(buildingName);
+    await this.page.waitForTimeout(1000);
     await this.page.getByText(`${buildingName} (${location})`).click();
     await this.page.waitForTimeout(500);
   }

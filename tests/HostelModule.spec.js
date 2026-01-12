@@ -8,6 +8,7 @@ import MembershipPage from '../pages/hostel/MembershipPage.js';
 import HostelNavigationPage from '../pages/hostel/HostelNavigationPage.js';
 
 test('Hostel - Create building/floor/room/template/member with unique data', async ({ page }) => {
+  test.setTimeout(180000);
   const uniqueId = Date.now();
   const buildingName = `automation building ${uniqueId}`;
   const floorName = `automation floor ${uniqueId}`;

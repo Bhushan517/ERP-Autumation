@@ -38,22 +38,30 @@ class MembershipPage {
   async selectUser(userName) {
     const userInput = this.page.locator('.react-select__input-container').first();
     await userInput.click();
+    await this.page.waitForTimeout(1000);
 
-    // Wait for the menu to appear. React-select menu usually has role 'listbox' or we can find options.
-    // User requested to click on the first available member/option.
-    // Using a more generic selector for the option.
+    // User requested to pick ANY name. 
+    // We will NOT type the specific userName to avoid "No results" if data is missing.
+    // If the list is empty, we might try typing a generic character like 'a'.
+
     const firstOption = this.page.locator('[id^="react-select-"][id*="-option-0"]').first();
 
-    // Sometimes the menu takes a moment or the ID is slightly different. 
-    // Trying to wait for any option.
     try {
-      await firstOption.waitFor({ state: 'visible', timeout: 5000 });
+      await firstOption.waitFor({ state: 'visible', timeout: 3000 });
       await firstOption.click();
     } catch (e) {
-      console.log('First specific option not found, trying generic role=option');
-      const genericOption = this.page.getByRole('option').first();
-      await genericOption.waitFor({ state: 'visible', timeout: 5000 });
-      await genericOption.click();
+      console.log('Option-0 not found. Checking for "No options"...');
+      const noOpt = this.page.getByText('No options');
+      if (await noOpt.isVisible()) {
+        console.log('List empty. Typing "a" to trigger search...');
+        await this.page.keyboard.type('a');
+        await this.page.waitForTimeout(1500);
+        // Try fetching option again
+        await this.page.getByRole('option').first().click();
+      } else {
+        // Maybe generic option is there
+        await this.page.getByRole('option').first().click();
+      }
     }
   }
 

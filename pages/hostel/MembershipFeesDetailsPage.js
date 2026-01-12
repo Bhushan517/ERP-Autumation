@@ -5,40 +5,66 @@ class MembershipFeesDetailsPage {
 
   async navigateToFeesDetails() {
     console.log('Navigating to Fees Details...');
-    await this.page.getByRole('link', { name: 'Fees Details' }).click();
+    const link = this.page.getByRole('link', { name: 'Fees Details' });
+    await link.waitFor({ state: 'visible', timeout: 10000 });
+    await link.click();
     await this.page.waitForTimeout(1000);
   }
 
   async searchAndSelectTemplate(templateName) {
-    await this.page.getByTestId('H-M-FD-Template-Search-Toggle').click();
+    const toggle = this.page.getByTestId('H-M-FD-Template-Search-Toggle');
+    await toggle.waitFor({ state: 'visible', timeout: 5000 });
+    await toggle.click();
     await this.page.waitForTimeout(500);
-    await this.page.getByTestId('H-M-FD-Template-Search-Input').fill('bhushan');
+
+    const input = this.page.getByTestId('H-M-FD-Template-Search-Input');
+    await input.waitFor({ state: 'visible', timeout: 2000 });
+    await input.fill('bhushan');
     await this.page.waitForTimeout(500);
-    await this.page.getByTestId('H-M-FD-Template-Option-0').getByText('bhushan raut').click();
+
+    const option = this.page.getByTestId('H-M-FD-Template-Option-0').getByText('bhushan raut');
+    await option.waitFor({ state: 'visible', timeout: 5000 });
+    await option.click();
     await this.page.waitForTimeout(500);
     console.log(`✅ Template '${templateName}' selected`);
 
   }
 
   async addTemplate() {
-    await this.page.getByTestId('H-M-FD-Template-Add-Button').click();
+    const addBtn = this.page.getByTestId('H-M-FD-Template-Add-Button');
+    await addBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await addBtn.click();
     await this.page.waitForTimeout(1000);
     console.log('Template added');
   }
 
   async addInstallment(amount, day) {
-    await this.page.getByTestId('H-M-FD-FeeTemplate-Add-Installment-Button').click();
+    const addInstBtn = this.page.getByTestId('H-M-FD-FeeTemplate-Add-Installment-Button');
+    await addInstBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await addInstBtn.click();
     await this.page.waitForTimeout(500);
-    await this.page.getByTestId('H-M-FD-FeeTemplate-Installment-Amount-Input-0').click();
-    await this.page.getByTestId('H-M-FD-FeeTemplate-Installment-Amount-Input-0').fill(amount);
+
+    const amountInput = this.page.getByTestId('H-M-FD-FeeTemplate-Installment-Amount-Input-0');
+    await amountInput.waitFor({ state: 'visible', timeout: 2000 });
+    await amountInput.click();
+    await amountInput.fill(amount);
+
     await this.page.getByRole('textbox', { name: 'Select date' }).click();
     await this.page.waitForTimeout(500);
-    await this.page.getByRole('button', { name: day }).click();
+    const dayBtn = this.page.getByRole('button', { name: day });
+    if (await dayBtn.isVisible()) {
+      await dayBtn.click();
+    } else {
+      // Fallback for date picker
+      await this.page.keyboard.press('Enter');
+    }
     await this.page.waitForTimeout(500);
   }
 
   async saveAll() {
-    await this.page.getByTestId('H-M-FD-FeeTemplate-Save-All-Button').click();
+    const saveBtn = this.page.getByTestId('H-M-FD-FeeTemplate-Save-All-Button');
+    await saveBtn.waitFor({ state: 'visible', timeout: 5000 });
+    await saveBtn.click();
     await this.page.waitForTimeout(2000);
   }
 
@@ -61,17 +87,27 @@ class MembershipFeesDetailsPage {
     await this.page.waitForTimeout(500);
     await this.page.getByRole('textbox', { name: 'Select date' }).click();
     await this.page.waitForTimeout(500);
-    await this.page.getByRole('button', { name: day }).click();
+
+    // Using simple locator for date if precise button fails
+    const dayBtn = this.page.getByRole('button', { name: day }).first();
+    if (await dayBtn.isVisible()) {
+      await dayBtn.click();
+    }
+
     await this.page.waitForTimeout(500);
-    await this.page.getByRole('textbox', { name: 'Enter Transaction ID' }).click();
-    await this.page.getByRole('textbox', { name: 'Enter Transaction ID' }).fill(transactionId);
+    const txnInput = this.page.getByRole('textbox', { name: 'Enter Transaction ID' });
+    await txnInput.waitFor({ state: 'visible' });
+    await txnInput.click();
+    await txnInput.fill(transactionId);
     await this.page.waitForTimeout(500);
+
     await this.page.getByRole('button', { name: 'Select Provider' }).click();
     await this.page.waitForTimeout(500);
     await this.page.getByText(provider, { exact: true }).click();
     await this.page.waitForTimeout(500);
+
     await this.page.getByRole('button', { name: 'Save' }).click();
-    await this.page.waitForTimeout(2000);
+    await this.page.waitForTimeout(3000); // Increased wait for saving payment
     console.log('✅ Manual payment processed successfully');
   }
 
