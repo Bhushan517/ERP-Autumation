@@ -23,7 +23,7 @@ import './AdmissionQa.spec.js';
 import './AdmissionQaUpdate.spec.js';
 import './AdmissionQaZDelete.spec.js';
 import './AdmissionFeesTamplateDelete.spec.js';
-// import './HostelModule.spec.js';
+import './HostelModule.spec.js';
 // import './HostelMembershipDetails.spec.js';
 import './UserManagement.spec.js';
 import './UserEditAndFilterDelete.spec.js';

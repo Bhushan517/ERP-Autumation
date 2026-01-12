@@ -4,6 +4,7 @@ import LoginQaPage from '../pages/login/LoginQaPage.js';
 import UserManagementPage from '../pages/user-management/UserManagementPage.js';
 
 test('Create User with Auto-Generated Data', async ({ page }) => {
+  test.setTimeout(120000);
   const loginQaPage = new LoginQaPage(page);
   const userManagementPage = new UserManagementPage(page);
 

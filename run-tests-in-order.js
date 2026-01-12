@@ -6,8 +6,8 @@ const testFiles = [
     'tests/AdmissionQaUpdate.spec.js',
     'tests/AdmissionQaZDelete.spec.js',
     'tests/AdmissionFeesTamplateDelete.spec.js',
-    // 'tests/HostelModule.spec.js',
-    // 'tests/HostelMembershipDetails.spec.js',
+    'tests/HostelModule.spec.js',
+    // 'tests/HostelMembershipDetails.spec.js',  // 
 
     'tests/UserManagement.spec.js',
     'tests/UserEditAndFilterDelete.spec.js',

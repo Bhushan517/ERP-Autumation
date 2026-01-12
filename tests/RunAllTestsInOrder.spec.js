@@ -40,13 +40,13 @@ test.describe.serial('Run All Tests In Order', () => {
         });
     });
 
-    // test('5. Run HostelModule.spec', async () => {
-    //     console.log('\n🔄 Running: HostelModule.spec.js\n');
-    //     execSync('npx playwright test tests/HostelModule.spec.js --headed', {
-    //         stdio: 'inherit',
-    //         cwd: process.cwd()
-    //     });
-    // });
+    test('5. Run HostelModule.spec', async () => {
+        console.log('\n🔄 Running: HostelModule.spec.js\n');
+        execSync('npx playwright test tests/HostelModule.spec.js --headed', {
+            stdio: 'inherit',
+            cwd: process.cwd()
+        });
+    });
 
     // test('6. Run HostelMembershipDetails.spec', async () => {
     //     console.log('\n🔄 Running: HostelMembershipDetails.spec.js\n');
