@@ -83,19 +83,24 @@ class MembershipPage {
   async selectStartDate(day) {
     const startDateInput = this.page.getByRole('textbox', { name: 'Select date' }).first();
     await startDateInput.click();
+    await this.page.waitForTimeout(500);
 
-    const dayButton = this.page.getByRole('button', { name: day }).nth(2);
+    // Filter for the button that is NOT disabled (opacity-30/cursor-not-allowed)
+    const dayButton = this.page.getByRole('button', { name: day, exact: true }).filter({ enabled: true }).first();
     await dayButton.waitFor({ state: 'visible', timeout: 5000 });
-    await dayButton.click();
+    await dayButton.click({ force: true });
+    await this.page.waitForTimeout(500);
   }
 
   async selectEndDate(day) {
     const endDateInput = this.page.getByRole('textbox', { name: 'Select date' }).nth(1);
     await endDateInput.click();
+    await this.page.waitForTimeout(500);
 
-    const dayButton = this.page.getByRole('button', { name: day, exact: true });
+    const dayButton = this.page.getByRole('button', { name: day, exact: true }).filter({ enabled: true }).first();
     await dayButton.waitFor({ state: 'visible', timeout: 5000 });
-    await dayButton.click();
+    await dayButton.click({ force: true });
+    await this.page.waitForTimeout(500);
   }
 
   async clickSave() {

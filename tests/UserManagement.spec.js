@@ -9,7 +9,7 @@ test('Create User with Auto-Generated Data', async ({ page }) => {
   const userManagementPage = new UserManagementPage(page);
 
   // Login
-  await loginQaPage.login('9699342811+2', 'Ritesh@123');
+  await loginQaPage.login('rushikesh@gmail.com', 'Rd@12345');
   await page.waitForTimeout(2000);
 
   // Navigate to Users

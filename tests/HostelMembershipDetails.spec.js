@@ -23,7 +23,7 @@ test('Hostel - Member Fees Details and Personal Details with auto-generated data
   const membershipPersonalDetailsPage = new MembershipPersonalDetailsPage(page);
   const membershipViewPage = new MembershipViewPage(page);
 
-  await loginQaPage.login('9699342811+2', 'Ritesh@123');
+  await loginQaPage.login('rushikesh@gmail.com', 'Rd@12345');
   await page.waitForTimeout(2000);
 
   await membershipPage.navigateToMemberships();

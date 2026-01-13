@@ -17,12 +17,12 @@ class LoginQaPage {
     await this.page.getByTestId('SI-password-input-password').fill(password);
   }
 
-  async clickSignInContainer() {
-    await this.page.getByTestId('SI-signin-container').click();
-  }
-
   async clickSubmit() {
     await this.page.getByTestId('SI-submit-button-show').click();
+  }
+
+  async selectGroup() {
+    await this.page.getByTestId('CG-org-card-571bf643-60d5-4e9c-9c99-b8a52ca1832a').click();
   }
 
   async login(username, password) {
@@ -30,9 +30,10 @@ class LoginQaPage {
     await this.goto();
     await this.enterUsername(username);
     await this.enterPassword(password);
-    await this.clickSignInContainer();
     await this.clickSubmit();
+    await this.selectGroup();
     console.log('✅ Login successful');
+    await this.page.waitForTimeout(2000);
   }
 }
 

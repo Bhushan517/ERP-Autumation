@@ -25,7 +25,7 @@ test('Hostel - Create building/floor/room/template/member with unique data', asy
   const membershipPage = new MembershipPage(page);
   const hostelNavigationPage = new HostelNavigationPage(page);
 
-  await loginQaPage.login('9699342811+2', 'Ritesh@123');
+  await loginQaPage.login('rushikesh@gmail.com', 'Rd@12345');
   await page.waitForTimeout(2000);
 
   await buildingPage.navigateToBuildings();

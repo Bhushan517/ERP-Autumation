@@ -9,7 +9,7 @@ test('Certificate Module - User Requested Flow', async ({ page }) => {
     const certificatePage = new CertificatePage(page);
 
     // 1. Login
-    await loginQaPage.login('9699342811+2', 'Ritesh@123');
+    await loginQaPage.login('rushikesh@gmail.com', 'Rd@12345');
     await page.getByTestId('menu-item-certificates').click(); // Initial Nav
 
     // 2. Nav to Approved -> Request New

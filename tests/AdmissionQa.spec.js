@@ -12,7 +12,7 @@ test('Admission QA - Create Admission and Fees Flow', async ({ page }) => {
   const feesDetailsQaPage = new FeesDetailsQaPage(page);
   const feesTemplateQaPage = new FeesTemplateQaPage(page);
 
-  await loginQaPage.login('9699342811+2', 'Ritesh@123');
+  await loginQaPage.login('rushikesh@gmail.com', 'Rd@12345');
   await page.waitForTimeout(1000);
 
   const uniqueId = `${Date.now()}`;
