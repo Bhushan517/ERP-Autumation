@@ -37,11 +37,34 @@ class KraApproveToggleOffPage {
     }
 
     async turnToggleOff() {
-        await this.waitAndClick(this.page.locator('div:nth-child(4) > .relative > .absolute'), 'Configuration option');
-        await this.page.waitForTimeout(800);
+        console.log('🔧 Checking Toggle state...');
+        const toggleLocator = this.page.locator('div:nth-child(4) > .relative > .absolute');
 
+        // Wait for it to be visible
+        await toggleLocator.waitFor({ state: 'visible', timeout: 10000 });
+
+        // Check if toggle is ON (using classes or state)
+        // Common indicator is bg-blue or bg-green on the parent or itself
+        const isToggleOn = await toggleLocator.evaluate(el => {
+            // Check computed style or classes
+            return el.classList.contains('bg-green-500') ||
+                el.classList.contains('bg-blue-500') ||
+                el.classList.contains('bg-blue-600') ||
+                el.getAttribute('aria-checked') === 'true';
+        }).catch(() => true); // Default to true if unsure
+
+        if (isToggleOn) {
+            console.log('✓ Toggle is ON - turning it OFF...');
+            await toggleLocator.click();
+            await this.page.waitForTimeout(800);
+        } else {
+            console.log('✓ Toggle is already OFF - no action needed');
+        }
+
+        // Always save as per request
         await this.waitAndClick(this.page.getByTestId('KM-KC-CS-Save-Button'), 'Save Config button');
         await this.page.waitForTimeout(2000);
+        console.log('✓ Configuration saved');
     }
 
     // Template Creation Methods
