@@ -14,6 +14,10 @@
  * 5. HostelModule.spec.js
  * 6. HostelMembershipDetails.spec.js
  * 7. UserManagement.spec.js
+ * 8. UserEditAndFilterDelete.spec.js
+ * 9. UserRole.spec.js
+ * 10. Certificate.spec.js
+ * 11. Kra.spec.js
  */
 
 import { test } from '@playwright/test';
@@ -29,6 +33,7 @@ import './UserManagement.spec.js';
 import './UserEditAndFilterDelete.spec.js';
 import './UserRole.spec.js';
 import './Certificate.spec.js';
+import './Kra.spec.js';
 
 // This file serves as an orchestrator
 // The actual tests are in the imported files above

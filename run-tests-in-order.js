@@ -12,7 +12,8 @@ const testFiles = [
     'tests/UserManagement.spec.js',
     'tests/UserEditAndFilterDelete.spec.js',
     'tests/UserRole.spec.js',
-    'tests/Certificate.spec.js'
+    'tests/Certificate.spec.js',
+    'tests/Kra.spec.js'
 ];
 
 console.log('\n🚀 Starting Sequential Test Execution...\n');

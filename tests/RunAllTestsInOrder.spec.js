@@ -88,4 +88,12 @@ test.describe.serial('Run All Tests In Order', () => {
         });
     });
 
+    test('11. Run Kra.spec', async () => {
+        console.log('\n🔄 Running: Kra.spec.js\n');
+        execSync('npx playwright test tests/Kra.spec.js --headed', {
+            stdio: 'inherit',
+            cwd: process.cwd()
+        });
+    });
+
 });
