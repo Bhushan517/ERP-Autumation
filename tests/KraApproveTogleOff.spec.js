@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import LoginQaPage from '../pages/login/LoginQaPage.js';
 import KraApproveToggleOffPage from '../pages/kra/KraApproveToggleOffPage.js';
 
 test('KRA Complete Workflow with Auto-generated Data', async ({ page }) => {
@@ -12,17 +13,18 @@ test('KRA Complete Workflow with Auto-generated Data', async ({ page }) => {
   const taskTitle = `Task_Primary_${timestamp}`;
   const dynamicTaskName = `DynamicTask_Add_${timestamp}`;
 
-  // Initialize Page Object
+  // Initialize Page Objects
+  const loginPage = new LoginQaPage(page);
   const kraOffPage = new KraApproveToggleOffPage(page);
 
   // Login
-  await kraOffPage.navigateToLogin();
-  await kraOffPage.fillUsername('ritesh@gmail.com');
-  await kraOffPage.fillPassword('Ritesh@123');
-  await kraOffPage.submitLogin();
+  await loginPage.navigateToLogin();
+  await loginPage.fillUsername('ritesh@gmail.com');
+  await loginPage.fillPassword('Ritesh@123');
+  await loginPage.submitLogin();
 
   // Select Organization
-  await kraOffPage.selectOrganization('571bf643-60d5-4e9c-9c99-b8a52ca1832a');
+  await loginPage.selectOrganization('571bf643-60d5-4e9c-9c99-b8a52ca1832a');
 
   // Navigate to KRA Configuration
   await kraOffPage.navigateToKraConfiguration();

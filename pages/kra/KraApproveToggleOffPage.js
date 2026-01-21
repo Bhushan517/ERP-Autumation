@@ -19,34 +19,6 @@ class KraApproveToggleOffPage {
         console.log(`✓ Filled: ${description} with "${text}"`);
     }
 
-    // Login Methods
-    async navigateToLogin() {
-        console.log('🔐 Starting Login...');
-        await this.page.goto('https://qa.d3kq8oy4csoq2n.amplifyapp.com/', { waitUntil: 'networkidle' });
-        await this.page.waitForTimeout(1500);
-    }
-
-    async fillUsername(username) {
-        await this.waitAndClick(this.page.getByTestId('SI-username-input-password'), 'Username field');
-        await this.waitAndFill(this.page.getByTestId('SI-username-input-password'), username, 'Username');
-    }
-
-    async fillPassword(password) {
-        await this.waitAndClick(this.page.getByTestId('SI-password-input-password'), 'Password field');
-        await this.waitAndFill(this.page.getByTestId('SI-password-input-password'), password, 'Password');
-    }
-
-    async submitLogin() {
-        await this.waitAndClick(this.page.getByTestId('SI-submit-button-show'), 'Submit button');
-        await this.page.waitForTimeout(2500);
-    }
-
-    async selectOrganization(orgId) {
-        console.log('🏢 Selecting Organization...');
-        await this.waitAndClick(this.page.getByTestId(`CG-org-card-${orgId}`), 'Organization card');
-        await this.page.waitForLoadState('networkidle');
-        await this.page.waitForTimeout(2000);
-    }
 
     // KRA Configuration Methods
     async navigateToKraConfiguration() {
