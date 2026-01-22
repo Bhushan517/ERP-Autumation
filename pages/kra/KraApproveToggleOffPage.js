@@ -36,7 +36,7 @@ class KraApproveToggleOffPage {
         await this.page.waitForTimeout(1500);
     }
 
-    async turnToggleOff() {
+   async turnToggleOff() {
         console.log('🔧 Checking Toggle state...');
         const toggleLocator = this.page.locator('div:nth-child(4) > .relative > .absolute');
 
@@ -88,7 +88,9 @@ class KraApproveToggleOffPage {
         await this.page.waitForTimeout(800);
         await this.waitAndClick(this.page.getByTestId('KM-KC-CNT-End-Date'), 'End date picker');
         await this.page.waitForTimeout(600);
-        await this.waitAndClick(this.page.getByRole('button', { name: day }), `Date ${day}`);
+        // Select any enabled date (target specific date cell class h-5 w-5 to avoid pagination buttons)
+        const enabledDate = this.page.locator('button.h-5.w-5:not([disabled])').filter({ hasText: /^[0-9]{1,2}$/ }).first();
+        await this.waitAndClick(enabledDate, 'First enabled date');
     }
 
     async selectDepartment(departmentName) {
@@ -202,7 +204,9 @@ class KraApproveToggleOffPage {
         await this.page.waitForTimeout(1000);
         await this.waitAndClick(this.page.getByRole('textbox', { name: 'Target Date' }).first(), 'First target date');
         await this.page.waitForTimeout(600);
-        await this.waitAndClick(this.page.getByRole('button', { name: day, exact: true }), `Date ${day}`);
+        // Select any enabled date (target specific date cell class h-5 w-5)
+        const enabledDate = this.page.locator('button.h-5.w-5:not([disabled])').filter({ hasText: /^[0-9]{1,2}$/ }).first();
+        await this.waitAndClick(enabledDate, 'First enabled date');
     }
 
     async addAdditionalTask(day) {
@@ -216,7 +220,9 @@ class KraApproveToggleOffPage {
 
         await this.waitAndClick(this.page.getByRole('textbox', { name: 'Target Date' }).nth(1), 'Task target date');
         await this.page.waitForTimeout(600);
-        await this.waitAndClick(this.page.getByRole('button', { name: day }), `Date ${day}`);
+        // Select any enabled date (target specific date cell class h-5 w-5)
+        const enabledDate = this.page.locator('button.h-5.w-5:not([disabled])').filter({ hasText: /^[0-9]{1,2}$/ }).first();
+        await this.waitAndClick(enabledDate, 'First enabled date');
     }
 
     async publishKraValidation() {
@@ -236,7 +242,9 @@ class KraApproveToggleOffPage {
         await this.page.waitForTimeout(800);
         await this.waitAndClick(this.page.getByRole('textbox', { name: 'Target Date' }).nth(1), 'Dynamic task target date');
         await this.page.waitForTimeout(600);
-        await this.waitAndClick(this.page.getByRole('button', { name: targetDay, exact: true }), `Date ${targetDay}`);
+        // Select any enabled date (target specific date cell class h-5 w-5)
+        const enabledDate = this.page.locator('button.h-5.w-5:not([disabled])').filter({ hasText: /^[0-9]{1,2}$/ }).first();
+        await this.waitAndClick(enabledDate, 'First enabled date');
 
         await this.page.waitForTimeout(800);
         await this.waitAndClick(this.page.getByTestId('PM-ACK-Milestone-Task-Description-0-0'), 'Dynamic task description');
