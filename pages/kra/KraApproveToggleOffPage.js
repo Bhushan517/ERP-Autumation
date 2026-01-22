@@ -36,7 +36,7 @@ class KraApproveToggleOffPage {
         await this.page.waitForTimeout(1500);
     }
 
-   async turnToggleOff() {
+    async turnToggleOff() {
         console.log('🔧 Checking Toggle state...');
         const toggleLocator = this.page.locator('div:nth-child(4) > .relative > .absolute');
 
@@ -95,7 +95,7 @@ class KraApproveToggleOffPage {
 
     async selectDepartment(departmentName) {
         await this.page.waitForTimeout(800);
-        await this.waitAndClick(this.page.locator('div').filter({ hasText: /^Select Department$/ }).nth(2), 'Department dropdown');
+        await this.waitAndClick(this.page.locator('div').filter({ hasText: /^Select Department$/i }).nth(2), 'Department dropdown');
         await this.page.waitForTimeout(600);
         await this.waitAndClick(this.page.getByRole('option', { name: departmentName }), 'Department option');
     }
@@ -261,9 +261,15 @@ class KraApproveToggleOffPage {
     async processApprovals() {
         console.log('✅ Processing Approvals...');
         await this.waitAndClick(this.page.getByTestId('PM-MK-Tab-MyApproval'), 'My Approval tab');
-        await this.page.waitForTimeout(2000);
+        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(3000);
 
-        await this.waitAndClick(this.page.getByTestId('PM-KW-Row-0'), 'KRA workflow row');
+        // Wait longer for workflow row as it may take time to load approval data
+        const workflowRow = this.page.getByTestId('PM-KW-Row-0');
+        await workflowRow.waitFor({ state: 'visible', timeout: 30000 });
+        await this.page.waitForTimeout(500);
+        await workflowRow.click();
+        console.log('✓ Clicked: KRA workflow row');
         await this.page.waitForTimeout(2000);
 
         await this.waitAndClick(this.page.getByTestId('PM-KWD-Tab-workflow'), 'Workflow tab');
