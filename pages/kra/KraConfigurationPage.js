@@ -84,11 +84,15 @@ class KraConfigurationPage {
     }
 
     async selectEndDate(day) {
-        console.log(`Selecting End Date: ${day}...`);
+        console.log(`Selecting End Date...`);
         await this.page.waitForTimeout(800);
         await this.page.getByTestId('KM-KC-CNT-End-Date').click();
         await this.page.waitForTimeout(500);
-        await this.page.getByRole('button', { name: day }).click();
+        // Select first enabled date (target specific date cell class h-5 w-5 to avoid pagination buttons)
+        const enabledDate = this.page.locator('button.h-5.w-5:not([disabled])').filter({ hasText: /^[0-9]{1,2}$/ }).first();
+        await enabledDate.waitFor({ state: 'visible', timeout: 10000 });
+        await enabledDate.click();
+        console.log('✓ Selected first enabled date');
     }
 
     async selectRole(roleName) {
