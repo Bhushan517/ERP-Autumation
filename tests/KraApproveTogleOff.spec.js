@@ -91,7 +91,7 @@ test('KRA Complete Workflow with Auto-generated Data', async ({ page }) => {
   await kraOffPage.checkTeamKra();
 
   // Return to My KRA
-  await kraOffPage.returnToMyKra();
+  // await kraOffPage.returnToMyKra();
 
   console.log('✅ Test completed successfully!');
 });

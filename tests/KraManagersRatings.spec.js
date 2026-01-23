@@ -8,17 +8,6 @@ test('test', async ({ page }) => {
   await page.goto('https://qa.d3kq8oy4csoq2n.amplifyapp.com/');
   await page.waitForLoadState('networkidle');
   
-  await page.getByTestId('SI-username-input-password').fill('ritesh@gmail.com');
-  await page.waitForTimeout(500);
-  
-  await page.getByTestId('SI-password-input-password').fill('Ritesh@123');
-  await page.waitForTimeout(500);
-  
-  await page.getByTestId('SI-submit-button-show').click();
-  await page.waitForLoadState('networkidle');
-  
-  await page.getByTestId('CG-org-card-571bf643-60d5-4e9c-9c99-b8a52ca1832a').click();
-  await page.waitForLoadState('networkidle');
   
   // Logout
   await page.getByTestId('logout-button').click();

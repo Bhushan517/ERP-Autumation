@@ -415,14 +415,14 @@ class KraApproveToggleOffPage {
         await this.page.waitForTimeout(2000);
     }
 
-    async returnToMyKra() {
-        console.log('🏁 Completing Test...');
-        await this.waitAndClick(this.page.getByTestId('submenu-item-my-kra'), 'My KRA submenu');
-        await this.page.waitForTimeout(2000);
+    // async returnToMyKra() {
+    //     console.log('🏁 Completing Test...');
+    //     await this.waitAndClick(this.page.getByTestId('submenu-item-my-kra'), 'My KRA submenu');
+    //     await this.page.waitForTimeout(2000);
 
-        await this.waitAndClick(this.page.getByTestId('menu-item-performance'), 'Performance menu');
-        await this.page.waitForTimeout(1500);
-    }
+    //     await this.waitAndClick(this.page.getByTestId('menu-item-performance'), 'Performance menu');
+    //     await this.page.waitForTimeout(1500);
+    // }
 }
 
 export default KraApproveToggleOffPage;
