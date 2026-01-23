@@ -3,8 +3,8 @@ import LoginQaPage from '../pages/login/LoginQaPage.js';
 import KraApproveToggleOffPage from '../pages/kra/KraApproveToggleOffPage.js';
 
 test('KRA Complete Workflow with Auto-generated Data', async ({ page }) => {
-  // Set timeout for long test
-  test.setTimeout(240000); // 4 minutes
+  // Set timeout for long test with multiple user logins
+  test.setTimeout(600000); // 10 minutes
 
   // Generate unique identifiers using timestamp
   const timestamp = Date.now();
@@ -91,7 +91,38 @@ test('KRA Complete Workflow with Auto-generated Data', async ({ page }) => {
   await kraOffPage.checkTeamKra();
 
   // Return to My KRA
-  // await kraOffPage.returnToMyKra();
+  await kraOffPage.returnToMyKra();
+
+  // ========== MANAGER RATING WORKFLOW ==========
+  console.log('🎯 Starting Manager Rating Workflow...');
+
+  // Logout from Ritesh account
+  await kraOffPage.logout();
+
+  // Login as Rushikesh (Manager 1)
+  await kraOffPage.loginAsManager('rushikesh@gmail.com', 'Rd@12345', '571bf643-60d5-4e9c-9c99-b8a52ca1832a');
+
+  // Navigate to Team KRA and add rating
+  await kraOffPage.navigateToTeamKra();
+  await kraOffPage.viewTeamKraDetails();
+  await kraOffPage.addManagerRating(4, 'goddjbhsbchscjbj');
+  await kraOffPage.navigateBackFromRating();
+  await kraOffPage.clearYearFilter();
+  await kraOffPage.navigateToMyKraFromTeam();
+
+  // Logout from Rushikesh account
+  await kraOffPage.logout();
+
+  // Login as Swati (Manager 2)
+  await kraOffPage.loginAsManager('swati.dighe@gmail.com', 'Swati@123', '571bf643-60d5-4e9c-9c99-b8a52ca1832a');
+
+  // Navigate to Team KRA and add rating
+  await kraOffPage.navigateToTeamKra();
+  await kraOffPage.viewTeamKraDetails();
+  await kraOffPage.addManagerRatingWithGapSelector(3, 'jhdbhjbhjbahjbahjfbajh');
+  await kraOffPage.navigateBackFromRating();
+  await kraOffPage.clearYearFilter();
+  await kraOffPage.navigateToMyKraFromTeam();
 
   console.log('✅ Test completed successfully!');
 });

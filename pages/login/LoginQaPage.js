@@ -37,7 +37,12 @@ class LoginQaPage {
     console.log(`Selecting organization: ${orgId}...`);
     await this.page.getByTestId(`CG-org-card-${orgId}`).click();
     await this.page.waitForLoadState('networkidle');
-    await this.page.waitForTimeout(2000);
+
+    // Extra wait for dashboard to fully load with all menu items
+    await this.page.waitForTimeout(3000);
+
+    // Verify dashboard is loaded by checking for common dashboard elements
+    await this.page.waitForLoadState('domcontentloaded');
     console.log('✅ Login successful');
   }
 

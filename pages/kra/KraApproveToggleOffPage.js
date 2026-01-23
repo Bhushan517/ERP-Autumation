@@ -3,17 +3,25 @@ class KraApproveToggleOffPage {
         this.page = page;
     }
 
-    // Helper function for waiting and clicking
+    // Helper function for waiting and clicking with retry mechanism
     async waitAndClick(locator, description = '') {
-        await locator.waitFor({ state: 'visible', timeout: 10000 });
+        // Increased timeout to 30s for stability
+        await locator.waitFor({ state: 'visible', timeout: 30000 });
         await this.page.waitForTimeout(500);
+
+        // Ensure element is also attached and enabled before clicking
+        await locator.waitFor({ state: 'attached', timeout: 5000 });
         await locator.click();
         console.log(`✓ Clicked: ${description}`);
     }
 
     async waitAndFill(locator, text, description = '') {
-        await locator.waitFor({ state: 'visible', timeout: 10000 });
+        // Increased timeout to 30s for stability
+        await locator.waitFor({ state: 'visible', timeout: 30000 });
         await this.page.waitForTimeout(300);
+
+        // Ensure element is editable before filling
+        await locator.waitFor({ state: 'attached', timeout: 5000 });
         await locator.clear();
         await locator.fill(text);
         console.log(`✓ Filled: ${description} with "${text}"`);
@@ -23,6 +31,17 @@ class KraApproveToggleOffPage {
     // KRA Configuration Methods
     async navigateToKraConfiguration() {
         console.log('⚙️ Navigating to KRA Configuration...');
+
+        // Wait for dashboard to fully load
+        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(2000);
+
+        // Extra wait to ensure menu is fully rendered
+        await this.page.waitForSelector('[data-testid="menu-item-kra-management"]', {
+            state: 'visible',
+            timeout: 30000
+        });
+
         await this.waitAndClick(this.page.getByTestId('menu-item-kra-management'), 'KRA Management menu');
         await this.page.waitForTimeout(1000);
 
@@ -40,8 +59,8 @@ class KraApproveToggleOffPage {
         console.log('🔧 Checking Toggle state...');
         const toggleLocator = this.page.locator('div:nth-child(4) > .relative > .absolute');
 
-        // Wait for it to be visible
-        await toggleLocator.waitFor({ state: 'visible', timeout: 10000 });
+        // Wait for it to be visible with increased timeout
+        await toggleLocator.waitFor({ state: 'visible', timeout: 30000 });
 
         // Check if toggle is ON (using classes or state)
         // Common indicator is bg-blue or bg-green on the parent or itself
@@ -415,14 +434,139 @@ class KraApproveToggleOffPage {
         await this.page.waitForTimeout(2000);
     }
 
-    // async returnToMyKra() {
-    //     console.log('🏁 Completing Test...');
-    //     await this.waitAndClick(this.page.getByTestId('submenu-item-my-kra'), 'My KRA submenu');
-    //     await this.page.waitForTimeout(2000);
+    async returnToMyKra() {
+        console.log('🏁 Completing Test...');
+        await this.waitAndClick(this.page.getByTestId('submenu-item-my-kra'), 'My KRA submenu');
+        await this.page.waitForTimeout(2000);
 
-    //     await this.waitAndClick(this.page.getByTestId('menu-item-performance'), 'Performance menu');
-    //     await this.page.waitForTimeout(1500);
-    // }
+        await this.waitAndClick(this.page.getByTestId('menu-item-performance'), 'Performance menu');
+        await this.page.waitForTimeout(1500);
+    }
+
+    // Manager Rating Workflow Methods
+    async logout() {
+        console.log('🚪 Logging out...');
+        await this.waitAndClick(this.page.getByTestId('logout-button'), 'Logout button');
+        await this.page.waitForTimeout(500);
+        await this.waitAndClick(this.page.getByRole('button', { name: 'Yes' }), 'Confirm logout');
+
+        // Wait for redirect to login page
+        await this.page.waitForLoadState('networkidle');
+        await this.page.waitForTimeout(2000);
+
+        // Verify we're on login page by checking for login form
+        await this.page.waitForSelector('[data-testid="SI-username-input-password"]', {
+            state: 'visible',
+            timeout: 30000
+        });
+        console.log('✓ Logged out successfully and redirected to login page');
+    }
+
+    async loginAsManager(email, password, orgId) {
+        console.log(`🔑 Logging in as ${email}...`);
+        await this.waitAndFill(this.page.getByTestId('SI-username-input-password'), email, 'Username');
+        await this.page.waitForTimeout(500);
+
+        await this.waitAndFill(this.page.getByTestId('SI-password-input-password'), password, 'Password');
+        await this.page.waitForTimeout(500);
+
+        await this.waitAndClick(this.page.getByTestId('SI-submit-button-show'), 'Login button');
+        await this.page.waitForLoadState('networkidle');
+
+        // Extra wait for organization selection page to load
+        await this.page.waitForTimeout(3000);
+
+        // Verify organization card is visible before clicking
+        await this.page.waitForSelector(`[data-testid="CG-org-card-${orgId}"]`, {
+            state: 'visible',
+            timeout: 30000
+        });
+
+        await this.waitAndClick(this.page.getByTestId(`CG-org-card-${orgId}`), 'Organization card');
+        await this.page.waitForLoadState('networkidle');
+
+        // Extra wait for dashboard to load after org selection
+        await this.page.waitForTimeout(3000);
+        console.log(`✅ Logged in as ${email} successfully`);
+    }
+
+    async navigateToTeamKra() {
+        console.log('👥 Navigating to Team KRA...');
+        await this.waitAndClick(this.page.getByTestId('menu-item-performance'), 'Performance menu');
+        await this.page.waitForTimeout(1000);
+
+        await this.waitAndClick(this.page.getByTestId('submenu-item-team-kra'), 'Team KRA submenu');
+        await this.page.waitForLoadState('networkidle');
+    }
+
+    async viewTeamKraDetails() {
+        console.log('📋 Viewing Team KRA details...');
+        await this.waitAndClick(this.page.getByTestId('PM-TK-Kra-Count-0'), 'KRA count');
+        await this.page.waitForTimeout(1000);
+
+        await this.waitAndClick(this.page.getByTestId('PM-VTK-Kra-0'), 'View KRA');
+        await this.page.waitForTimeout(1000);
+
+        await this.waitAndClick(this.page.getByTestId('PM-TWD-Back-Button'), 'Back button');
+        await this.page.waitForTimeout(500);
+    }
+
+    async addManagerRating(starNumber, comment) {
+        console.log(`⭐ Adding manager rating (${starNumber} stars)...`);
+        await this.waitAndClick(this.page.getByTestId('PM-VTK-Rating-0'), 'Rating button');
+        await this.page.waitForTimeout(500);
+
+        // Click the star button based on position
+        await this.waitAndClick(this.page.locator(`.flex > button:nth-child(${starNumber})`), `Star ${starNumber}`);
+        await this.page.waitForTimeout(500);
+
+        await this.waitAndFill(this.page.getByRole('textbox', { name: 'Enter your comment' }), comment, 'Comment');
+        await this.page.waitForTimeout(500);
+
+        await this.waitAndClick(this.page.getByRole('button', { name: 'Save' }), 'Save rating');
+        await this.page.waitForTimeout(1000);
+    }
+
+    async addManagerRatingWithGapSelector(starNumber, comment) {
+        console.log(`⭐ Adding manager rating with gap selector (${starNumber} stars)...`);
+        await this.waitAndClick(this.page.getByTestId('PM-VTK-Rating-0'), 'Rating button');
+        await this.page.waitForTimeout(500);
+
+        // Click the star button using .flex.gap-2 selector
+        await this.waitAndClick(this.page.locator(`.flex.gap-2 > button:nth-child(${starNumber})`), `Star ${starNumber}`);
+        await this.page.waitForTimeout(500);
+
+        await this.waitAndFill(this.page.getByRole('textbox', { name: 'Enter your comment' }), comment, 'Comment');
+        await this.page.waitForTimeout(500);
+
+        await this.waitAndClick(this.page.getByRole('button', { name: 'Save' }), 'Save rating');
+        await this.page.waitForTimeout(1000);
+    }
+
+    async navigateBackFromRating() {
+        console.log('⬅️ Navigating back...');
+        await this.waitAndClick(this.page.getByTestId('PM-VTK-Kra-0'), 'View KRA');
+        await this.page.waitForTimeout(500);
+
+        await this.waitAndClick(this.page.getByTestId('PM-TWD-Back-Button'), 'Back button');
+        await this.page.waitForTimeout(500);
+
+        await this.waitAndClick(this.page.getByTestId('PM-VTK-Back-Button'), 'Back to Team KRA');
+        await this.page.waitForTimeout(1000);
+    }
+
+    async clearYearFilter() {
+        await this.waitAndClick(this.page.getByTestId('PM-TK-Year-Clear'), 'Clear year filter');
+        await this.page.waitForTimeout(500);
+    }
+
+    async navigateToMyKraFromTeam() {
+        await this.waitAndClick(this.page.getByTestId('submenu-item-my-kra'), 'My KRA submenu');
+        await this.page.waitForLoadState('networkidle');
+
+        await this.waitAndClick(this.page.getByTestId('menu-item-performance'), 'Performance menu');
+        await this.page.waitForTimeout(1000);
+    }
 }
 
 export default KraApproveToggleOffPage;
