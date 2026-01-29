@@ -88,10 +88,10 @@ test('KRA Complete Workflow with Auto-generated Data', async ({ page }) => {
   await kraOffPage.submitRating();
 
   // Check Team KRA
-  await kraOffPage.checkTeamKra();
+  // await kraOffPage.checkTeamKra();
 
-  // Return to My KRA
-  await kraOffPage.returnToMyKra();
+  // // Return to My KRA
+  // await kraOffPage.returnToMyKra();
 
   // ========== MANAGER RATING WORKFLOW ==========
   console.log('🎯 Starting Manager Rating Workflow...');

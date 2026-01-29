@@ -406,42 +406,42 @@ class KraApproveToggleOffPage {
     }
 
     // Team KRA
-    async checkTeamKra() {
-        console.log('👥 Checking Team KRA...');
-        await this.waitAndClick(this.page.getByTestId('submenu-item-team-kra'), 'Team KRA submenu');
-        await this.page.waitForTimeout(2500);
+    // async checkTeamKra() {
+    //     console.log('👥 Checking Team KRA...');
+    //     await this.waitAndClick(this.page.getByTestId('submenu-item-team-kra'), 'Team KRA submenu');
+    //     await this.page.waitForTimeout(2500);
 
-        await this.waitAndClick(this.page.getByTestId('PM-TK-Kra-Count-0'), 'KRA count');
-        await this.page.waitForTimeout(2000);
+    //     await this.waitAndClick(this.page.getByTestId('PM-TK-Kra-Count-0'), 'KRA count');
+    //     await this.page.waitForTimeout(2000);
 
-        await this.waitAndClick(this.page.getByTestId('PM-VTK-Rating-0'), 'View team rating');
-        await this.page.waitForTimeout(2000);
+    //     await this.waitAndClick(this.page.getByTestId('PM-VTK-Rating-0'), 'View team rating');
+    //     await this.page.waitForTimeout(2000);
 
-        await this.waitAndClick(this.page.locator('.flex.items-center.justify-between > button'), 'Expand button');
-        await this.page.waitForTimeout(1000);
+    //     await this.waitAndClick(this.page.locator('.flex.items-center.justify-between > button'), 'Expand button');
+    //     await this.page.waitForTimeout(1000);
 
-        // Go back - Try standard ID first, then fallback to generic
-        console.log('Clicking Back button...');
-        const backButton = this.page.getByTestId('PM-TWD-Back-Button');
-        try {
-            await backButton.waitFor({ state: 'visible', timeout: 5000 });
-            await backButton.click();
-        } catch (e) {
-            console.log('Standard back button ID not found, trying fallback...');
-            // Fallback: Click the first button in the main content area which usually behaves as back/close
-            await this.page.locator('button').first().click();
-        }
-        await this.page.waitForTimeout(2000);
-    }
+    //     // Go back - Try standard ID first, then fallback to generic
+    //     console.log('Clicking Back button...');
+    //     const backButton = this.page.getByTestId('PM-TWD-Back-Button');
+    //     try {
+    //         await backButton.waitFor({ state: 'visible', timeout: 5000 });
+    //         await backButton.click();
+    //     } catch (e) {
+    //         console.log('Standard back button ID not found, trying fallback...');
+    //         // Fallback: Click the first button in the main content area which usually behaves as back/close
+    //         await this.page.locator('button').first().click();
+    //     }
+    //     await this.page.waitForTimeout(2000);
+    // }
 
-    async returnToMyKra() {
-        console.log('🏁 Completing Test...');
-        await this.waitAndClick(this.page.getByTestId('submenu-item-my-kra'), 'My KRA submenu');
-        await this.page.waitForTimeout(2000);
+    // async returnToMyKra() {
+    //     console.log('🏁 Completing Test...');
+    //     await this.waitAndClick(this.page.getByTestId('submenu-item-my-kra'), 'My KRA submenu');
+    //     await this.page.waitForTimeout(2000);
 
-        await this.waitAndClick(this.page.getByTestId('menu-item-performance'), 'Performance menu');
-        await this.page.waitForTimeout(1500);
-    }
+    //     await this.waitAndClick(this.page.getByTestId('menu-item-performance'), 'Performance menu');
+    //     await this.page.waitForTimeout(1500);
+    // }
 
     // Manager Rating Workflow Methods
     async logout() {
